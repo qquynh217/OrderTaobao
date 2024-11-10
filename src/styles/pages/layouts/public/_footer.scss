@@ -1,0 +1,35 @@
+.footer {
+  background: rgba(0, 0, 0, 0.7);
+  padding: 7rem 0;
+  color: #999999;
+
+  &-inner {
+    width: $max-width;
+    margin: auto;
+  }
+  .logo {
+    color: $color_white;
+    margin-bottom: 1.5rem;
+  }
+  p {
+    font-size: 16px;
+  }
+  h2 {
+    color: $color_white;
+    margin-bottom: 1.5rem;
+    font-size: 20px;
+  }
+  a {
+    display: block;
+    font-size: 16px;
+    color: #999999;
+    padding-bottom: 10px;
+  }
+  .contact {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 16px;
+    margin-top: 15px;
+  }
+}

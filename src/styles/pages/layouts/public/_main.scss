@@ -1,0 +1,18 @@
+@import "./header";
+@import "./footer";
+
+.public-layout {
+  min-height: 100vh;
+}
+.logo {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  img {
+    width: 32px;
+  }
+  span {
+    font-size: 24px;
+    font-weight: 700;
+  }
+}

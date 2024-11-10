@@ -1,7 +1,7 @@
 html,
 body {
   font-size: 14px;
-  font-family: $sora, sans-serif;
+  font-family: $roboto, sans-serif;
   #root {
     height: 100%;
 
@@ -14,4 +14,21 @@ body {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
+}
+::-webkit-scrollbar-track {
+  border-radius: 4px;
+  background-color: transparent;
+}
+
+::-webkit-scrollbar {
+  width: 10px;
+}
+
+::-webkit-scrollbar-thumb {
+  border-radius: 4px;
+  background-color: #ee4d2d85;
+  visibility: hidden;
+}
+:hover::-webkit-scrollbar-thumb {
+  visibility: visible;
 }

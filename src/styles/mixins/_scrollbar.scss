@@ -1,0 +1,19 @@
+@mixin scrollbar($color: #999, $width: 6px) {
+  &::-webkit-scrollbar-track {
+    border-radius: 10px;
+    background-color: transparent;
+  }
+
+  &::-webkit-scrollbar {
+    width: $width;
+  }
+
+  &::-webkit-scrollbar-thumb {
+    border-radius: 10px;
+    background-color: $color;
+    visibility: hidden;
+  }
+  &:hover::-webkit-scrollbar-thumb {
+    visibility: visible;
+  }
+}

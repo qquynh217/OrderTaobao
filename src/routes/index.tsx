@@ -1,13 +1,14 @@
-import GamePage from "pages/games";
 import HomePage from "pages/home";
 import PublicLayout from "pages/layout/Public";
 import { Navigate, createBrowserRouter } from "react-router-dom";
 
 export const ROUTE_URL = {
   HOME: "/",
-  GAMES: "/games",
-  RULES: "rules",
-  EVENTS: "/events",
+  PRICE: "/bieu-phi",
+  INSTRUCTION: "/huong-dan",
+  ORDER: "/don-hang",
+  CART: "/don-hang/gio-hang",
+  POLICY: "/chinh-sach",
 };
 const routes = [
   {
@@ -17,10 +18,6 @@ const routes = [
       {
         path: ROUTE_URL.HOME,
         element: <HomePage />,
-      },
-      {
-        path: ROUTE_URL.GAMES,
-        element: <GamePage />,
       },
     ],
   },
