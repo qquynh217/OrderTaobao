@@ -1,0 +1,52 @@
+.signup {
+  min-height: 100vh;
+  background: linear-gradient(rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.6)),
+    url("/src/resources/images/background.png");
+  background-attachment: fixed; /* Làm cho background cố định */
+  background-size: cover; /* Tùy chọn: phóng to hình nền để phủ kín toàn bộ trang */
+  background-position: center;
+  display: flex;
+  align-items: center;
+  padding: 50px 0;
+  &-wrapper {
+    width: 620px;
+    background-color: $color_white;
+    border-radius: 8px;
+    margin: auto;
+    padding: 40px;
+    box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
+    h2 {
+      font-size: 28px;
+      text-align: center;
+      margin-bottom: 20px;
+    }
+  }
+  .logo {
+    position: fixed;
+    top: 20px;
+    left: 20px;
+    color: $color_white;
+  }
+}
+.signup-form {
+  .ant-form-item {
+    margin-bottom: 15px;
+    label {
+      font-family: $roboto;
+      font-weight: 500;
+    }
+  }
+  .button-field {
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    align-items: center;
+    padding-top: 10px;
+    button {
+      width: 30%;
+    }
+    .note {
+      margin-top: 15px;
+    }
+  }
+}

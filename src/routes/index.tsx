@@ -1,5 +1,6 @@
 import HomePage from "pages/home";
 import PublicLayout from "pages/layout/Public";
+import SignUp from "pages/signup";
 import { Navigate, createBrowserRouter } from "react-router-dom";
 
 export const ROUTE_URL = {
@@ -9,6 +10,8 @@ export const ROUTE_URL = {
   ORDER: "/don-hang",
   CART: "/don-hang/gio-hang",
   POLICY: "/chinh-sach",
+  SIGNUP: "/dang-ky",
+  LOGIN: "/dang-nhap",
 };
 const routes = [
   {
@@ -20,6 +23,14 @@ const routes = [
         element: <HomePage />,
       },
     ],
+  },
+  {
+    path: ROUTE_URL.SIGNUP,
+    element: <SignUp />,
+  },
+  {
+    path: ROUTE_URL.LOGIN,
+    element: <SignUp />,
   },
   {
     path: "*",

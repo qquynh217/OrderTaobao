@@ -1,0 +1,58 @@
+import { Button, Form, Input } from "antd";
+import showMessage from "components/Message";
+import { EMAIL_PATTERN } from "constants";
+import { FC } from "react";
+import { Link } from "react-router-dom";
+import { ROUTE_URL } from "routes";
+
+const LoginForm: FC = () => {
+  const handleSubmit = (value: { email: string; password: string }) => {
+    console.log(value);
+    try {
+      showMessage("success", "Đăng nhập thành công!");
+    } catch (error) {
+      showMessage("error", "Đăng nhập không thành công!");
+    }
+  };
+  return (
+    <Form layout="vertical" onFinish={handleSubmit} className="signup-form">
+      <Form.Item
+        name="Email"
+        label="Email"
+        required
+        rules={[
+          () => ({
+            validator(_, value) {
+              if (EMAIL_PATTERN.test(value)) {
+                return Promise.resolve();
+              }
+              return Promise.reject(new Error("Vui lòng điền email hợp lệ.  "));
+            },
+          }),
+        ]}
+      >
+        <Input placeholder="example@gmail.com" />
+      </Form.Item>
+      <Form.Item
+        name="password"
+        label="Mật khẩu"
+        rules={[
+          { required: true, message: "Mật khẩu không hợp lệ." },
+          { min: 6, message: "Mật khẩu tối thiểu 6 ký tự" },
+        ]}
+      >
+        <Input.Password placeholder="Mật khẩu tối thiểu 6 ký tự" />
+      </Form.Item>
+      <div className="button-field">
+        <Button type="primary" htmlType="submit">
+          Đăng nhập
+        </Button>
+        <p className="note">
+          Bạn chưa có tài khoản? <Link to={ROUTE_URL.SIGNUP}>Đăng ký</Link> tại
+          đây
+        </p>
+      </div>
+    </Form>
+  );
+};
+export default LoginForm;

@@ -58,10 +58,10 @@ const HeaderPublic: FC = () => {
         ) : (
           <>
             <div className="nav-item">
-              <NavLink to={ROUTE_URL.ORDER}>Đăng ký</NavLink>
+              <NavLink to={ROUTE_URL.SIGNUP}>Đăng ký</NavLink>
             </div>
             <div className="nav-item">
-              <NavLink to={ROUTE_URL.ORDER}>Đăng nhập</NavLink>
+              <NavLink to={ROUTE_URL.LOGIN}>Đăng nhập</NavLink>
             </div>
           </>
         )}

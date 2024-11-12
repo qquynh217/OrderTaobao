@@ -39,6 +39,9 @@ const Footer: FC = () => {
               <div className="nav-item">
                 <NavLink to={ROUTE_URL.INSTRUCTION}>Hướng dẫn</NavLink>
               </div>
+              <div className="nav-item">
+                <NavLink to={ROUTE_URL.POLICY}>Quy định & Chính sách</NavLink>
+              </div>
             </div>
           </Col>
           <Col span={7}>

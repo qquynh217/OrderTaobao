@@ -1,0 +1,37 @@
+.ant-btn-primary {
+  padding: 12px 24px;
+  height: auto;
+  background-color: $color_primary;
+  border-radius: 4px;
+  color: $color_white;
+  font-weight: 600;
+  align-items: start;
+  &:not(:disabled):not(.ant-btn-disabled):hover {
+    background-color: $color_primary;
+    color: initial;
+  }
+  * {
+    font-size: 20px;
+  }
+  span {
+    font-size: 14px;
+  }
+}
+
+.ant-btn-primary.black {
+  padding: 12px 24px;
+  height: auto;
+  border-radius: 4px;
+  background-color: #000;
+  color: #fff;
+  &:not(:disabled):not(.ant-btn-disabled):hover {
+    background-color: #000;
+    color: #fff;
+  }
+}
+
+.ant-table-filter-dropdown-btns {
+  .ant-btn-primary {
+    padding: 0 10px;
+  }
+}
