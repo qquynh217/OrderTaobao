@@ -8,4 +8,5 @@ export const initUser = {
   district: "",
   province: "",
   addressDetail: "",
+  role: "",
 };

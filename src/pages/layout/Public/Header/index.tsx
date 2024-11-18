@@ -45,7 +45,7 @@ const HeaderPublic: FC = () => {
         {userId ? (
           <>
             <div className="nav-item">
-              <NavLink to={ROUTE_URL.ORDER}>Quản lý đơn hàng</NavLink>
+              <NavLink to={ROUTE_URL.ORDER_ALL}>Quản lý đơn hàng</NavLink>
             </div>
             <div className="nav-item">
               <NavLink to={ROUTE_URL.CART}>

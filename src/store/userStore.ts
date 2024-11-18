@@ -28,6 +28,10 @@ export const userStore = create<IUser & IUserAction>()(
       name: USER_STORAGE,
       partialize: (state) => ({
         token: state.token,
+        email: state.email,
+        id: state.id,
+        fullname: state.fullname,
+        role: state.role,
       }),
     }
   )

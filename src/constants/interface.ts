@@ -8,4 +8,5 @@ export interface IUser {
   district?: string;
   province?: string;
   addressDetail?: string;
+  role: string;
 }
