@@ -11,12 +11,56 @@
     font-weight: 500;
     margin-bottom: 20px;
   }
-  .table-header {
-    padding: 14px 15px;
-    border-bottom: 1px solid #e8ebf1;
-    color: #686868;
-    font-weight: 600;
-    text-transform: uppercase;
-    font-size: 14px;
+  .ant-form-item {
+    margin: 0;
   }
+  .table-header {
+    border-bottom: 1px solid #e8ebf1;
+    .header-item {
+      padding: 14px 15px;
+      color: #686868;
+      font-weight: 600;
+      text-transform: uppercase;
+      font-size: 14px;
+    }
+  }
+  .column-item {
+    // height: 100%;
+    padding: 0 10px;
+    display: flex;
+    align-items: center;
+    img.no-image {
+      width: 50px;
+    }
+  }
+  .button-cell {
+    display: flex;
+    align-items: center;
+  }
+  .delete-btn {
+    padding: 6px 12px;
+    * {
+      font-size: 14px;
+    }
+  }
+  .table-row {
+    border-bottom: 1px solid #e8ebf1;
+    padding: 24px 0;
+  }
+  .table-footer {
+    padding: 24px 0;
+  }
+  .add-btn {
+    padding: 8px 24px;
+    color: #ee7530 !important;
+    background-color: rgba(238, 118, 48, 0.2705882353) !important;
+    width: 50%;
+    margin-top: 20px;
+  }
+}
+.ant-input-number {
+  width: 100%;
+}
+.ant-form-item {
+  width: 100%;
 }

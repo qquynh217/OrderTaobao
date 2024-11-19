@@ -5,8 +5,8 @@ import { FaBars } from "react-icons/fa";
 import { Outlet, useLocation, useNavigate } from "react-router-dom";
 import { ROUTE_URL, sidebarItems } from "routes";
 import { userStore } from "store/userStore";
-import HeaderPrivate from "./Header";
 import FooterPrivate from "./Footer";
+import HeaderPrivate from "./Header";
 
 const { Text } = Typography;
 
@@ -61,6 +61,7 @@ const PriveLayout: FC = () => {
             <FaBars />
           </div>
         </div>
+
         <Menu
           mode="inline"
           theme="dark"
@@ -69,18 +70,13 @@ const PriveLayout: FC = () => {
           items={sidebarItems.filter((item) => item.role.includes(role))}
           selectedKeys={location.pathname ? [location.pathname] : []}
         />
-        {/* <div className="footer">
-          <div className="logout" onClick={handleLogout}>
-            <p>Đăng xuất</p>
-          </div>
-        </div> */}
       </Sider>
       <Layout
         style={{ marginLeft: collapsed ? 80 : 240 }}
         className="ant-layout-content"
       >
         <HeaderPrivate isCollapsed={collapsed} />
-        <Content style={{ margin: "24px 16px 0", overflow: "initial" }}>
+        <Content style={{ overflow: "initial" }}>
           <div
             className="private-layout-content"
             style={{

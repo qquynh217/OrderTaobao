@@ -1,4 +1,6 @@
-export const initUser = {
+import { IUser } from "./interface";
+
+export const initUser: IUser = {
   id: 0,
   email: "",
   fullname: "",
@@ -9,4 +11,5 @@ export const initUser = {
   province: "",
   addressDetail: "",
   role: "",
+  balance: 0,
 };

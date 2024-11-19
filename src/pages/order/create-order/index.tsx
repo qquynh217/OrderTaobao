@@ -1,18 +1,84 @@
-import { Button, Col, Form, Input, Row } from "antd";
+import { Button, Col, Form, Input, InputNumber, Radio, Row, Space } from "antd";
+import ImageUploader from "components/ImageUpload";
 import { FC } from "react";
-import { IoRemoveCircleOutline } from "react-icons/io5";
-
+import { FaPlus, FaX } from "react-icons/fa6";
+import noPhoto from "resources/images/no-photo.png";
 const tableCol = [
-  { key: "image", name: "Ảnh", span: 3 },
-  { key: "image", name: "Link sản phẩm", span: 5 },
-  { key: "image", name: "Màu sắc", span: 3 },
-  { key: "image", name: "Kích thước", span: 3 },
-  { key: "image", name: "Số lượng", span: 2 },
-  { key: "image", name: "Giá (Tệ)", span: 3 },
-  { key: "image", name: "Ghi chú", span: 5 },
+  { key: "image", name: "Ảnh", span: 2 },
+  {
+    key: "link",
+    name: "Link sản phẩm",
+    span: 5,
+    label: "Nhập link sản phẩm",
+    Comp: Input,
+    rules: [
+      {
+        required: true,
+        message: "Chưa nhập link sản phẩm",
+      },
+    ],
+  },
+  { key: "color", name: "Màu sắc", span: 3, label: "Màu sắc" },
+  { key: "size", name: "Kích thước", span: 3, label: "Nhập size" },
+  {
+    key: "qty",
+    name: "Số lượng",
+    span: 3,
+    label: "Số lượng",
+    Comp: InputNumber,
+    rules: [
+      {
+        required: true,
+        message: "Chưa nhập số lượng",
+      },
+    ],
+  },
+  {
+    key: "price",
+    name: "Giá (Tệ)",
+    span: 3,
+    label: "Giá (Tệ)",
+    Comp: InputNumber,
+    rules: [
+      {
+        required: true,
+        message: "Chưa nhập giá",
+      },
+    ],
+  },
+  {
+    key: "note",
+    name: "Ghi chú",
+    span: 4,
+    label: "Ghi chú",
+    type: "text",
+    Comp: Input.TextArea,
+  },
 ];
 
 const CreateOrder: FC = () => {
+  const [form] = Form.useForm();
+  // const image = Form.useWatch("image", form);
+  const onSubmit = (value: any) => {
+    console.log(value);
+    let data = {
+      image: value.image || "",
+      shippingType: value.shippingType,
+      products: [
+        {
+          link: value.link,
+          color: value.color || "",
+          size: value.size || "",
+          qty: value.qty,
+          price: value.price,
+          note: value.note || "",
+        },
+        ...(value.products || []),
+      ],
+    };
+    console.log(data);
+  };
+
   return (
     <div className="create-order">
       <h2>Tạo đơn từ website</h2>
@@ -20,53 +86,134 @@ const CreateOrder: FC = () => {
         Quý khách nên tạo đơn hàng bằng extension để có được trải nghiệm tốt
         nhất. Mời quý khách cài đặt tại
       </p>
-      <Row>
+      <Row className="table-header">
         {tableCol.map((item) => (
           <Col span={item.span} key={item.key}>
-            <p className="table-header">{item.name}</p>
+            <p className="header-item">{item.name}</p>
           </Col>
         ))}
       </Row>
       <Form
         name="dynamic_form_nest_item"
-        style={{ maxWidth: 600 }}
         autoComplete="off"
+        form={form}
+        onFinish={onSubmit}
       >
-        <Form.List name="users">
+        <Row className="table-row">
+          {tableCol.map((item) => {
+            let Comp = item.Comp || Input;
+            return (
+              <Col span={item.span} key={item.key}>
+                <div className="column-item">
+                  {item.key == "image" ? (
+                    <img src={noPhoto} className="no-image" />
+                  ) : (
+                    <Form.Item
+                      name={item.key}
+                      rules={item.rules}
+                      key={item.key}
+                    >
+                      <Comp placeholder={item.label} />
+                    </Form.Item>
+                  )}
+                </div>
+              </Col>
+            );
+          })}
+        </Row>
+        <Form.List name="products">
           {(fields, { add, remove }) => (
             <>
               {fields.map(({ key, name, ...restField }) => (
-                <Row>
-                  <Form.Item
-                    {...restField}
-                    name={[name, "first"]}
-                    rules={[{ required: true, message: "Missing first name" }]}
-                  >
-                    <Input placeholder="First Name" />
-                  </Form.Item>
-                  <Form.Item
-                    {...restField}
-                    name={[name, "last"]}
-                    rules={[{ required: true, message: "Missing last name" }]}
-                  >
-                    <Input placeholder="Last Name" />
-                  </Form.Item>
-                  <IoRemoveCircleOutline onClick={() => remove(name)} />
+                <Row className="table-row">
+                  {tableCol.map((item) => {
+                    let Comp = item.Comp || Input;
+                    return (
+                      <Col span={item.span} key={item.key}>
+                        <div className="column-item">
+                          {item.key == "image" ? (
+                            <img src={noPhoto} className="no-image" />
+                          ) : (
+                            <Form.Item
+                              {...restField}
+                              name={[name, item.key]}
+                              rules={item.rules}
+                              key={item.key}
+                            >
+                              <Comp placeholder={item.label} />
+                            </Form.Item>
+                          )}
+                        </div>
+                      </Col>
+                    );
+                  })}
+                  <Col span={1} className="button-cell">
+                    <Button
+                      type="primary"
+                      className="delete-btn"
+                      onClick={() => remove(name)}
+                    >
+                      <FaX />
+                    </Button>
+                  </Col>
                 </Row>
               ))}
-              <Form.Item>
-                <Button type="dashed" onClick={() => add()} block>
-                  Add field
-                </Button>
-              </Form.Item>
+              <Button
+                type="primary"
+                onClick={() => add()}
+                block
+                className="add-btn"
+              >
+                <span>Thêm sản phẩm</span>
+                <FaPlus />
+              </Button>
             </>
           )}
         </Form.List>
-        <Form.Item>
-          <Button type="primary" htmlType="submit">
-            Submit
-          </Button>
-        </Form.Item>
+        <Row className="table-footer">
+          <Col span={7}>
+            <div className="column-item">
+              <Form.Item
+                name="shippingType"
+                rules={[
+                  {
+                    required: true,
+                    message: "Chọn phương thức vận chuyển",
+                  },
+                ]}
+              >
+                <Radio.Group>
+                  <Space direction="vertical" style={{ gap: 20 }}>
+                    <Radio value="normal">Chuyển phát thường</Radio>
+                    <Radio value="fast">Chuyển phát nhanh</Radio>
+                    <Radio value="line">Đi line TMDT</Radio>
+                  </Space>
+                </Radio.Group>
+              </Form.Item>
+            </div>
+          </Col>
+          <Col span={12}>
+            <div className="column-item">
+              <ImageUploader form={form} />
+              <Form.Item name="image" style={{ display: "none" }}>
+                <Input placeholder="Link ảnh" />
+              </Form.Item>
+            </div>
+          </Col>
+          <Col span={5}>
+            <div className="column-item" style={{ gap: 20 }}>
+              <Button
+                type="primary"
+                htmlType="submit"
+                style={{
+                  width: "100%",
+                }}
+              >
+                Tạo đơn
+              </Button>
+            </div>
+          </Col>
+        </Row>
       </Form>
     </div>
   );

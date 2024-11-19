@@ -1,0 +1,25 @@
+.image-uploader {
+  display: flex;
+  width: 100%;
+  gap: 15px;
+  .input-field {
+    width: 50%;
+  }
+  .upload-btn {
+    margin-top: 10px;
+    display: inline-flex;
+    padding: 6px 12px;
+    border-radius: 8px;
+    border: 1px solid #d9d9d9;
+    cursor: pointer;
+    align-items: center;
+    gap: 10px;
+  }
+  .ant-image {
+    border: 1px solid #d9d9d9;
+    border-radius: 8px;
+    img {
+      width: 200px;
+    }
+  }
+}

@@ -9,4 +9,18 @@ export interface IUser {
   province?: string;
   addressDetail?: string;
   role: string;
+  balance: number;
+  transferContent?: string;
+  avatar?: string;
+}
+
+export interface IOder {
+  id: number;
+  image?: string;
+  link: string;
+  color?: string;
+  size?: string;
+  qty: number;
+  price: number;
+  note?: string;
 }
