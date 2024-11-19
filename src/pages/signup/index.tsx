@@ -4,10 +4,13 @@ import { FC } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import { ROUTE_URL } from "routes";
 import logo from "resources/images/logo.png";
+import { userStore } from "store/userStore";
 
 const SignUp: FC = () => {
   const { pathname } = useLocation();
   const navigate = useNavigate();
+  const { id: userId } = userStore();
+  if (userId) navigate(ROUTE_URL.ORDER_ALL);
   return (
     <div className="signup">
       <div

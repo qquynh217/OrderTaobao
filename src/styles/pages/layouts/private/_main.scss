@@ -46,8 +46,7 @@ $yellow: #fece51;
   &-content {
     min-height: calc(100vh - $header-height);
     background: #f7f7f5 !important;
-    max-width: 1430px;
-    margin: auto;
+    margin: $header-height auto;
     h2.title {
       font-size: 24px;
       margin-bottom: 20px;

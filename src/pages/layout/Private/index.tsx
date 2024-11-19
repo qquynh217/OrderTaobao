@@ -65,6 +65,7 @@ const PriveLayout: FC = () => {
           mode="inline"
           theme="dark"
           onClick={(e) => navigate(e.key)}
+          defaultOpenKeys={[ROUTE_URL.ORDER]}
           items={sidebarItems.filter((item) => item.role.includes(role))}
           selectedKeys={location.pathname ? [location.pathname] : []}
         />

@@ -3,15 +3,17 @@ import showMessage from "components/Message";
 import { EMAIL_PATTERN } from "constants";
 import { user } from "constants/dumpData";
 import { FC } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { ROUTE_URL } from "routes";
 import { userStore } from "store/userStore";
 
 const LoginForm: FC = () => {
   const { handleUserLogin } = userStore();
+  const navigate = useNavigate();
   const handleSubmit = (value: { email: string; password: string }) => {
     console.log(value);
     handleUserLogin(user);
+    navigate(ROUTE_URL.ORDER_ALL);
     try {
       showMessage("success", "Đăng nhập thành công!");
     } catch (error) {

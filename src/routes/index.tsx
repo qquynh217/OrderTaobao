@@ -2,6 +2,7 @@ import HomePage from "pages/home";
 import PriveLayout from "pages/layout/Private";
 import PublicLayout from "pages/layout/Public";
 import AllOrder from "pages/order/all-order";
+import CreateOrder from "pages/order/create-order";
 import SignUp from "pages/signup";
 import { FaBoxArchive, FaCartShopping, FaGlobe } from "react-icons/fa6";
 import { Navigate, createBrowserRouter } from "react-router-dom";
@@ -45,6 +46,10 @@ const routes = [
       {
         path: ROUTE_URL.ORDER_ALL,
         element: <AllOrder />,
+      },
+      {
+        path: ROUTE_URL.ORDER_CREATE,
+        element: <CreateOrder />,
       },
     ],
   },
