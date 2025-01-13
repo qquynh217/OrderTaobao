@@ -158,15 +158,20 @@ const CreateOrder: FC = () => {
                   </Col>
                 </Row>
               ))}
-              <Button
-                type="primary"
-                onClick={() => add()}
-                block
-                className="add-btn"
-              >
-                <span>Thêm sản phẩm</span>
-                <FaPlus />
-              </Button>
+              <Row>
+                <Col span={19} />
+                <Col span={5} className="col-add-btn">
+                  <Button
+                    type="primary"
+                    onClick={() => add()}
+                    block
+                    className="add-btn"
+                  >
+                    <span>Thêm sản phẩm</span>
+                    <FaPlus />
+                  </Button>
+                </Col>
+              </Row>
             </>
           )}
         </Form.List>

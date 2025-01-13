@@ -47,7 +47,7 @@ $yellow: #fece51;
     margin-top: 20px;
   }
   &-content {
-    // min-height: calc(100vh - $header-height);
+    // min-height: calc(100vh - $header-height - 250px);
     background: #f7f7f5 !important;
     margin: $header-height auto 0;
     h2.title {
