@@ -1,6 +1,8 @@
 .create-order {
   background-color: $color_white;
   padding: 2rem;
+  min-height: calc(100vh - $header-height - 300px);
+
   h2 {
     font-size: 32px;
     text-align: center;
@@ -50,12 +52,14 @@
   .table-footer {
     padding: 24px 0;
   }
+  .col-add-btn {
+    padding: 20px 10px 0;
+  }
   .add-btn {
     padding: 8px 24px;
     color: #ee7530 !important;
     background-color: rgba(238, 118, 48, 0.2705882353) !important;
-    width: 50%;
-    margin-top: 20px;
+    width: 100%;
   }
 }
 .ant-input-number {
