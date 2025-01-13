@@ -1,0 +1,22 @@
+.list-order {
+  h2.title {
+    border-bottom: 1px solid #d8d8d8;
+  }
+  .search-order_form {
+    padding-top: 20px;
+    .ant-form-item {
+      .ant-picker {
+        width: 100%;
+      }
+    }
+    .ant-btn {
+      padding: 4px 24px;
+      &.export-btn {
+        background-color: #1d6f42;
+      }
+    }
+  }
+  &_wrapper {
+    margin-top: 10px;
+  }
+}

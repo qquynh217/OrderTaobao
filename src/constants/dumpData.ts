@@ -1,4 +1,4 @@
-import { IUser } from "./interface";
+import { IOrder, IUser } from "./interface";
 
 export const user: IUser = {
   id: "1",
@@ -11,4 +11,54 @@ export const user: IUser = {
   province: "Hà Nội",
   addressDetail: "số nhà 18, ngõ 104, Cầu Diễn, Nam Từ Liêm, Hà Nội",
   role: "user",
+  balance: 0,
+};
+
+export const orderEx: IOrder = {
+  id: 85612,
+  status: 2,
+  images:
+    "https://cbu01.alicdn.com/img/ibank/2019/456/041/11329140654_1610935134.jpg",
+  shippingType: "Chuyển thường",
+  products: [
+    {
+      id: 1,
+      link: "https://detail.1688.com/offer/597872715411.html?spm=a26352.b28411319.offerlist.5.63041e62pKsLr3",
+      color: "Hồng",
+      size: "Đường ngang + trống lớn",
+      qty: 2,
+      qtyOrder: 2,
+      qtyReceive: 2,
+      price: 6.17,
+      note: "",
+    },
+    {
+      id: 2,
+      link: "https://detail.1688.com/offer/597872715411.html?spm=a26352.b28411319.offerlist.5.63041e62pKsLr3",
+      color: "Xanh",
+      size: "Hàng ngang + kèn trống",
+      qty: 2,
+      qtyOrder: 2,
+      qtyReceive: 2,
+      price: 4.56,
+      note: "",
+    },
+  ],
+  isChecked: false,
+  noteForOwner: "Ghi chú",
+  noteForStaff: "",
+  orderFeePercent: 0.05,
+  exchangeRate: 3520,
+  stockWarehouse: "Hà Nội",
+  userWarehouse: "Hà Nội",
+  shippingCnFee: 0,
+  tallyFee: 0,
+  extraFee: 0,
+  totalFee: 93396,
+  totalPaid: 0,
+  depositAt: "",
+  purchasedAt: "",
+  transitToVnAt: "",
+  stockInVnAt: "",
+  returnAt: "",
 };

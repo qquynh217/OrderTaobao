@@ -31,6 +31,7 @@ const PriveLayout: FC = () => {
   const {
     token: { colorBgContainer, borderRadiusLG },
   } = theme.useToken();
+
   return (
     <Layout hasSider className="private-layout">
       <Sider
@@ -48,10 +49,12 @@ const PriveLayout: FC = () => {
         }}
         width={240}
       >
-        <div className="sider-header">
-          <Text className="email" ellipsis={{ tooltip: email }}>
-            {email}
-          </Text>
+        <div className={`sider-header ${collapsed ? "collapsed" : ""}`}>
+          {!collapsed && (
+            <Text className="email" ellipsis={{ tooltip: email }}>
+              {email}
+            </Text>
+          )}
           <div
             className="collapsed-icon"
             onClick={() => {
@@ -68,7 +71,11 @@ const PriveLayout: FC = () => {
           onClick={(e) => navigate(e.key)}
           defaultOpenKeys={[ROUTE_URL.ORDER]}
           items={sidebarItems.filter((item) => item.role.includes(role))}
-          selectedKeys={location.pathname ? [location.pathname] : []}
+          selectedKeys={
+            location.pathname + location.search
+              ? [location.pathname + location.search]
+              : []
+          }
         />
       </Sider>
       <Layout

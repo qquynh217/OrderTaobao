@@ -4,6 +4,7 @@ interface ImportMetaEnv {
   VITE_TITLE: string;
   VITE_USER_STORE: string;
   VITE_API_PROVINCE: string;
+  VITE_EXCHANGE_RATE: number | string;
 }
 interface ImportMeta {
   readonly env: ImportMetaEnv;

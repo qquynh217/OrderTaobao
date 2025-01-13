@@ -23,7 +23,7 @@ const HeaderPrivate: FC<{ isCollapsed: boolean }> = ({ isCollapsed }) => {
           </div>
         </div>
         <div className="header-right">
-          <p>Tỉ giá: 3695</p>
+          <p>Tỉ giá: {import.meta.env.VITE_EXCHANGE_RATE}</p>
           <Link to={ROUTE_URL.CART}>Giỏ hàng</Link>
           <Dropdown
             menu={{

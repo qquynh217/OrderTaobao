@@ -1,0 +1,59 @@
+.order-item {
+  padding: 1.5rem 1.5rem;
+  border-radius: 15px;
+  box-shadow: 0 0 10px 0 rgba(183, 192, 206, 0.2);
+  -webkit-box-shadow: 0 0 10px 0 rgba(183, 192, 206, 0.2);
+  background-color: #fff;
+  background-clip: border-box;
+  border: 1px solid #f2f4f9;
+  .order-header {
+    margin-top: 10px;
+    .order-id {
+      align-items: start;
+      gap: 10px;
+      .shipping-type {
+        color: $color_primary;
+        text-transform: uppercase;
+      }
+    }
+    img {
+      width: 70px;
+    }
+    .deposit {
+      margin-top: 10px;
+      display: flex;
+      gap: 15px;
+      font-weight: 500;
+    }
+    .note {
+      text-align: center;
+    }
+    .button-detail {
+      display: flex;
+      justify-content: end;
+      align-items: start;
+      button {
+        margin-right: 24px;
+        padding: 8px 24px;
+      }
+    }
+    .editable-paragraph {
+      margin-top: 5px;
+      margin-bottom: 0;
+      svg {
+        width: 18px;
+        height: 18px;
+      }
+    }
+  }
+  .order-fee {
+    margin-left: 8%;
+    margin-top: 10px;
+    &_item {
+      display: flex;
+      justify-content: space-between;
+      line-height: 1.5;
+      font-weight: 500;
+    }
+  }
+}

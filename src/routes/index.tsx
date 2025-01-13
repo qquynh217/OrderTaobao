@@ -1,11 +1,12 @@
 import HomePage from "pages/home";
 import PriveLayout from "pages/layout/Private";
 import PublicLayout from "pages/layout/Public";
-import AllOrder from "pages/order/all-order";
+import ListOrder from "pages/order/list-order";
 import CreateOrder from "pages/order/create-order";
 import SignUp from "pages/signup";
 import { FaBoxArchive, FaCartShopping, FaGlobe } from "react-icons/fa6";
 import { Navigate, createBrowserRouter } from "react-router-dom";
+import { ORDER_STATUS } from "constants";
 
 export const ROUTE_URL = {
   HOME: "/",
@@ -45,7 +46,7 @@ const routes = [
     children: [
       {
         path: ROUTE_URL.ORDER_ALL,
-        element: <AllOrder />,
+        element: <ListOrder />,
       },
       {
         path: ROUTE_URL.ORDER_CREATE,
@@ -66,31 +67,31 @@ export const sidebarItems = [
     key: ROUTE_URL.ORDER_CREATE,
     icon: <FaGlobe />,
     label: "Tạo đơn từ website",
-    role: ["user", "landlord", "admin"],
+    role: ["user", "admin"],
   },
 
   {
     key: ROUTE_URL.ORDER,
     icon: <FaBoxArchive />,
     label: "Đơn hàng",
-    role: ["user", "landlord", "admin"],
+    role: ["user", "admin"],
     children: [
       {
         key: ROUTE_URL.ORDER_ALL,
         label: "Tất cả",
-        role: ["user", "landlord", "admin"],
+        role: ["user", "admin"],
       },
-      {
-        key: ROUTE_URL.CART,
-        label: "Giỏ hàng",
-        role: ["user", "landlord", "admin"],
-      },
+      ...ORDER_STATUS.map((item) => ({
+        key: ROUTE_URL.ORDER_ALL + `?status=${item.key}`,
+        label: item.value,
+        role: ["user", "admin"],
+      })),
     ],
   },
   {
     key: ROUTE_URL.CART,
     icon: <FaCartShopping />,
     label: "Giỏ hàng",
-    role: ["user", "landlord", "admin"],
+    role: ["user", "admin"],
   },
 ];
