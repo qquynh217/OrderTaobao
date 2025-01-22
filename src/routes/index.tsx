@@ -7,6 +7,7 @@ import SignUp from "pages/signup";
 import { FaBoxArchive, FaCartShopping, FaGlobe } from "react-icons/fa6";
 import { Navigate, createBrowserRouter } from "react-router-dom";
 import { ORDER_STATUS } from "constants";
+import OrderDetail from "pages/order-detail";
 
 export const ROUTE_URL = {
   HOME: "/",
@@ -20,6 +21,7 @@ export const ROUTE_URL = {
   ORDER_ALL: "/don-hang/tat-ca",
   PROFILE: "/thong-tin-ca-nhan",
   ORDER_CREATE: "/don-hang/tao-don",
+  ORDER_DETAIL: "/don-hang/chi-tiet",
 };
 const routes = [
   {
@@ -52,6 +54,14 @@ const routes = [
         path: ROUTE_URL.ORDER_CREATE,
         element: <CreateOrder />,
       },
+      {
+        path: ROUTE_URL.ORDER_ALL + "/:status",
+        element: <ListOrder />,
+      },
+      {
+        path: ROUTE_URL.ORDER_DETAIL + "/:orderId",
+        element: <OrderDetail />,
+      },
     ],
   },
   {
@@ -82,7 +92,7 @@ export const sidebarItems = [
         role: ["user", "admin"],
       },
       ...ORDER_STATUS.map((item) => ({
-        key: ROUTE_URL.ORDER_ALL + `?status=${item.key}`,
+        key: ROUTE_URL.ORDER_ALL + `/${item.key}`,
         label: item.value,
         role: ["user", "admin"],
       })),

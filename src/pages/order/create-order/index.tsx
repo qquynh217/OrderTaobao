@@ -1,8 +1,10 @@
 import { Button, Col, Form, Input, InputNumber, Radio, Row, Space } from "antd";
 import ImageUploader from "components/ImageUpload";
+import { SHIPPING_TYPE } from "constants";
 import { FC } from "react";
 import { FaPlus, FaX } from "react-icons/fa6";
 import noPhoto from "resources/images/no-photo.png";
+import { orderService } from "services/order";
 const tableCol = [
   { key: "image", name: "Ảnh", span: 2 },
   {
@@ -59,17 +61,17 @@ const tableCol = [
 const CreateOrder: FC = () => {
   const [form] = Form.useForm();
   // const image = Form.useWatch("image", form);
-  const onSubmit = (value: any) => {
+  const onSubmit = async (value: any) => {
     console.log(value);
     let data = {
       image: value.image || "",
       shippingType: value.shippingType,
       products: [
         {
-          link: value.link,
+          link_product: value.link,
           color: value.color || "",
           size: value.size || "",
-          qty: value.qty,
+          number: value.qty,
           price: value.price,
           note: value.note || "",
         },
@@ -77,6 +79,15 @@ const CreateOrder: FC = () => {
       ],
     };
     console.log(data);
+    const formData = new FormData();
+    formData.append("image", data.image);
+    formData.append("data", JSON.stringify(data));
+    try {
+      const res = await orderService.create(formData);
+      console.log(res);
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   return (
@@ -125,7 +136,7 @@ const CreateOrder: FC = () => {
           {(fields, { add, remove }) => (
             <>
               {fields.map(({ key, name, ...restField }) => (
-                <Row className="table-row">
+                <Row className="table-row" key={key}>
                   {tableCol.map((item) => {
                     let Comp = item.Comp || Input;
                     return (
@@ -189,9 +200,9 @@ const CreateOrder: FC = () => {
               >
                 <Radio.Group>
                   <Space direction="vertical" style={{ gap: 20 }}>
-                    <Radio value="normal">Chuyển phát thường</Radio>
-                    <Radio value="fast">Chuyển phát nhanh</Radio>
-                    <Radio value="line">Đi line TMDT</Radio>
+                    {SHIPPING_TYPE.map((item) => (
+                      <Radio value={item.value}>{item.text}</Radio>
+                    ))}
                   </Space>
                 </Radio.Group>
               </Form.Item>

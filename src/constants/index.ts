@@ -18,3 +18,18 @@ export const ORDER_STATUS = [
   { key: 7, value: "Trên đường về VN", color: "#6a008a" },
   { key: 8, value: "Trong kho VN", color: "#57c7d4" },
 ];
+
+export const SHIPPING_TYPE = [
+  {
+    value: "normal",
+    text: "Chuyển thường",
+  },
+  {
+    value: "fast",
+    text: "Chuyển nhanh",
+  },
+  {
+    value: "line",
+    text: "Đi line TMDT",
+  },
+];

@@ -17,11 +17,12 @@ const ImageUploader: FC<{ form: FormInstance<any> }> = ({ form }) => {
   // Xử lý khi người dùng upload file
   const handleFileChange = (e: any) => {
     const file = e.target.files[0];
+
     if (file) {
       const reader = new FileReader();
       reader.onload = () => {
         setPreview(reader.result); // Tạo preview từ file
-        form.setFieldValue("image", reader.result);
+        form.setFieldValue("image", file);
       };
       reader.readAsDataURL(file);
     }

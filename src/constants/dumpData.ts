@@ -16,6 +16,7 @@ export const user: IUser = {
 
 export const orderEx: IOrder = {
   id: 85612,
+  code: 85612,
   status: 2,
   images:
     "https://cbu01.alicdn.com/img/ibank/2019/456/041/11329140654_1610935134.jpg",
@@ -23,28 +24,32 @@ export const orderEx: IOrder = {
   products: [
     {
       id: 1,
-      link: "https://detail.1688.com/offer/597872715411.html?spm=a26352.b28411319.offerlist.5.63041e62pKsLr3",
+      link_product:
+        "https://detail.1688.com/offer/597872715411.html?spm=a26352.b28411319.offerlist.5.63041e62pKsLr3",
       color: "Hồng",
       size: "Đường ngang + trống lớn",
-      qty: 2,
+      number: 2,
       qtyOrder: 2,
       qtyReceive: 2,
       price: 6.17,
       note: "",
+      image:
+        "https://cbu01.alicdn.com/img/ibank/2019/456/041/11329140654_1610935134.jpg",
     },
     {
       id: 2,
-      link: "https://detail.1688.com/offer/597872715411.html?spm=a26352.b28411319.offerlist.5.63041e62pKsLr3",
+      link_product:
+        "https://detail.1688.com/offer/597872715411.html?spm=a26352.b28411319.offerlist.5.63041e62pKsLr3",
       color: "Xanh",
       size: "Hàng ngang + kèn trống",
-      qty: 2,
+      number: 2,
       qtyOrder: 2,
       qtyReceive: 2,
       price: 4.56,
       note: "",
     },
   ],
-  isChecked: false,
+  itemTotalCost: 75539,
   noteForOwner: "Ghi chú",
   noteForStaff: "",
   orderFeePercent: 0.05,
@@ -54,11 +59,17 @@ export const orderEx: IOrder = {
   shippingCnFee: 0,
   tallyFee: 0,
   extraFee: 0,
-  totalFee: 93396,
+  totalFee: 79316,
   totalPaid: 0,
   depositAt: "",
   purchasedAt: "",
   transitToVnAt: "",
   stockInVnAt: "",
   returnAt: "",
+  weightBasedFee: 0,
+  volumnBasedFee: 0,
+  totalWeightFee: 0,
+  woodPackagingFee: 0,
+  isWoodPackaging: false,
+  extraShippingFee: 0,
 };

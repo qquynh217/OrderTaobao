@@ -1,0 +1,38 @@
+.order-detail {
+  .order-info,
+  .order-history {
+    padding: 1.5rem 1.5rem;
+    border-radius: 15px;
+    box-shadow: 0 0 10px 0 rgba(183, 192, 206, 0.2);
+    -webkit-box-shadow: 0 0 10px 0 rgba(183, 192, 206, 0.2);
+    background-color: #fff;
+    background-clip: border-box;
+    border: 1px solid #f2f4f9;
+  }
+  .order-img {
+    width: 100px;
+    height: 100px;
+    object-fit: cover;
+    box-shadow: rgba(50, 50, 93, 0.25) 0px 2px 5px -1px,
+      rgba(0, 0, 0, 0.3) 0px 1px 3px -1px;
+  }
+  .order-header_text {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+    .editable-paragraph {
+      margin: 5px 0;
+    }
+  }
+  .ant-table-thead .ant-table-cell {
+    color: #686868;
+    font-size: 12px;
+  }
+  .ant-table {
+    margin: 10px 0 20px;
+  }
+  .product-link img {
+    width: 70px;
+    height: 70px;
+  }
+}

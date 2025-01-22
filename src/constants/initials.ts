@@ -20,7 +20,6 @@ export const initOrder: IOrder = {
   images: "",
   shippingType: "",
   products: [],
-  isChecked: false,
   noteForOwner: "",
   noteForStaff: "",
   orderFeePercent: 0,
@@ -34,4 +33,5 @@ export const initOrder: IOrder = {
   transitToVnAt: "",
   stockInVnAt: "",
   returnAt: "",
+  itemTotalCost: 0,
 };
