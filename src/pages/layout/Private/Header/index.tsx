@@ -6,10 +6,13 @@ import { TbLogout } from "react-icons/tb";
 import { Link, NavLink } from "react-router-dom";
 import emptyAva from "resources/images/empty-avatar.png";
 import { ROUTE_URL } from "routes";
+import { configStore } from "store/configStore";
 import { userStore } from "store/userStore";
 
 const HeaderPrivate: FC<{ isCollapsed: boolean }> = ({ isCollapsed }) => {
-  const { fullname, email, balance, handleLogout } = userStore();
+  const { name, email, balance, handleLogout } = userStore();
+  const { exchange_rate } = configStore();
+
   return (
     <div
       className="header-private"
@@ -23,7 +26,7 @@ const HeaderPrivate: FC<{ isCollapsed: boolean }> = ({ isCollapsed }) => {
           </div>
         </div>
         <div className="header-right">
-          <p>Tỉ giá: {import.meta.env.VITE_EXCHANGE_RATE}</p>
+          <p>Tỉ giá: {exchange_rate}</p>
           <Link to={ROUTE_URL.CART}>Giỏ hàng</Link>
           <Dropdown
             menu={{
@@ -33,7 +36,7 @@ const HeaderPrivate: FC<{ isCollapsed: boolean }> = ({ isCollapsed }) => {
                   label: (
                     <div className="user-menu-item user-info">
                       <Avatar src={emptyAva} alt="" size={44} />
-                      <b>{fullname}</b>
+                      <b>{name}</b>
                       <p>{email}</p>
                     </div>
                   ),

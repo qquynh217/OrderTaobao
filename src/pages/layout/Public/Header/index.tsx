@@ -7,7 +7,8 @@ import { userStore } from "store/userStore";
 
 const HeaderPublic: FC = () => {
   const [scrolled, setScrolled] = useState(false);
-  const { id: userId } = userStore();
+  const { token } = userStore();
+
   // Hàm theo dõi sự kiện cuộn
   useEffect(() => {
     const handleScroll = () => {
@@ -42,7 +43,7 @@ const HeaderPublic: FC = () => {
         <div className="nav-item">
           <NavLink to={ROUTE_URL.POLICY}>Quy định & Chính sách</NavLink>
         </div>
-        {userId ? (
+        {token ? (
           <>
             <div className="nav-item">
               <NavLink to={ROUTE_URL.ORDER_ALL}>Quản lý đơn hàng</NavLink>

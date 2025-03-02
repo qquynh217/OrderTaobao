@@ -35,4 +35,19 @@
     width: 70px;
     height: 70px;
   }
+  .order-total {
+    &_detail {
+      margin-top: 20px;
+      padding-left: 10px;
+    }
+    h4 {
+      margin-bottom: 10px;
+    }
+    .total-fee {
+      padding: 12px 20px;
+      margin-top: 20px;
+      border-radius: 8px;
+      background-color: #f4a460;
+    }
+  }
 }

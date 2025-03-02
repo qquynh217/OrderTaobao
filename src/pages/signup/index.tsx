@@ -5,12 +5,16 @@ import { useLocation, useNavigate } from "react-router-dom";
 import { ROUTE_URL } from "routes";
 import logo from "resources/images/logo.png";
 import { userStore } from "store/userStore";
+import { USER_ROLE } from "constants";
 
 const SignUp: FC = () => {
   const { pathname } = useLocation();
   const navigate = useNavigate();
-  const { id: userId } = userStore();
-  if (userId) navigate(ROUTE_URL.ORDER_ALL);
+  const { token, role } = userStore();
+  if (token) {
+    if (role == USER_ROLE.USER) navigate(ROUTE_URL.ORDER_ALL);
+    else navigate(ROUTE_URL.ORDER_ADMIN);
+  }
   return (
     <div className="signup">
       <div

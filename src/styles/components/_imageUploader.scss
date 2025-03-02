@@ -1,12 +1,13 @@
 .image-uploader {
   display: flex;
+  flex-direction: column;
   width: 100%;
   gap: 15px;
   .input-field {
     width: 50%;
   }
   .upload-btn {
-    margin-top: 10px;
+    // margin-top: 10px;
     display: inline-flex;
     padding: 6px 12px;
     border-radius: 8px;
@@ -19,7 +20,18 @@
     border: 1px solid #d9d9d9;
     border-radius: 8px;
     img {
-      width: 200px;
+      width: 250px;
     }
+  }
+  .loading {
+    display: flex;
+    flex-direction: column;
+    width: 150px;
+    aspect-ratio: 1/1;
+    align-items: center;
+    gap: 10px;
+    justify-content: center;
+    background: rgba(0, 0, 0, 0.05);
+    border-radius: 8px;
   }
 }

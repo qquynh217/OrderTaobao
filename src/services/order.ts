@@ -5,10 +5,11 @@ type SearchType = {
   page?: number;
   size?: number;
   sort_by?: string;
-  sort?: "asc" | "desc";
-  search?: "string";
+  sort?: string;
+  search?: string;
   time_from?: string | number;
   time_to?: string | number;
+  status?: string | number;
 };
 
 class OrderService {
@@ -22,10 +23,16 @@ class OrderService {
     return axiosInstance.post("/order", params);
   }
   getImage(params: { order_id: string; image_id: string }) {
-    return (
-      import.meta.env.VITE_API_URL +
-      `order/${params.order_id}/image/${params.image_id}/thumbnail?user=user`
+    return axiosInstance.get(
+      `/order/${params.order_id}/image/${params.image_id}/thumbnail?user=user`,
+      { responseType: "arraybuffer" }
     );
+  }
+  getDetail(params: string) {
+    return axiosInstance.get(`/order/${params}`);
+  }
+  update(params: { orderId: string; data: any }) {
+    return axiosInstance.put(`/order/${params.orderId}`, params.data);
   }
 }
 

@@ -1,10 +1,22 @@
-import { Button, Col, Form, Input, InputNumber, Radio, Row, Space } from "antd";
+import {
+  Button,
+  Col,
+  Form,
+  Input,
+  InputNumber,
+  Radio,
+  Row,
+  Space,
+  Spin,
+} from "antd";
 import ImageUploader from "components/ImageUpload";
+import showMessage from "components/Message";
 import { SHIPPING_TYPE } from "constants";
-import { FC } from "react";
+import { FC, useState } from "react";
 import { FaPlus, FaX } from "react-icons/fa6";
 import noPhoto from "resources/images/no-photo.png";
 import { orderService } from "services/order";
+import { configStore } from "store/configStore";
 const tableCol = [
   { key: "image", name: "Ảnh", span: 2 },
   {
@@ -23,7 +35,7 @@ const tableCol = [
   { key: "color", name: "Màu sắc", span: 3, label: "Màu sắc" },
   { key: "size", name: "Kích thước", span: 3, label: "Nhập size" },
   {
-    key: "qty",
+    key: "number",
     name: "Số lượng",
     span: 3,
     label: "Số lượng",
@@ -60,38 +72,54 @@ const tableCol = [
 
 const CreateOrder: FC = () => {
   const [form] = Form.useForm();
+  const [isLoading, setIsLoading] = useState(false);
+  const { exchange_rate } = configStore();
   // const image = Form.useWatch("image", form);
   const onSubmit = async (value: any) => {
-    console.log(value);
+    setIsLoading(true);
     let data = {
       image: value.image || "",
-      shippingType: value.shippingType,
+      type_delivery: value.shippingType,
+      status: 1,
+      item_total_cost: 0,
       products: [
         {
           link_product: value.link,
           color: value.color || "",
           size: value.size || "",
-          number: value.qty,
+          number: value.number,
           price: value.price,
           note: value.note || "",
         },
         ...(value.products || []),
       ],
     };
+    data.item_total_cost = data.products.reduce(
+      (res, item) => res + item.price * item.number * exchange_rate,
+      0
+    );
     console.log(data);
+
     const formData = new FormData();
     formData.append("image", data.image);
     formData.append("data", JSON.stringify(data));
+
     try {
       const res = await orderService.create(formData);
       console.log(res);
+      form.resetFields();
+      showMessage("success", "Tạo đơn hàng thành công.");
     } catch (error) {
       console.log(error);
+      showMessage("error", "Tạo đơn hàng không thành công.");
+    } finally {
+      setIsLoading(false);
     }
   };
 
   return (
     <div className="create-order">
+      {isLoading && <Spin fullscreen tip="Đang tạo đơn..." />}
       <h2>Tạo đơn từ website</h2>
       <p className="desc">
         Quý khách nên tạo đơn hàng bằng extension để có được trải nghiệm tốt
@@ -211,9 +239,6 @@ const CreateOrder: FC = () => {
           <Col span={12}>
             <div className="column-item">
               <ImageUploader form={form} />
-              <Form.Item name="image" style={{ display: "none" }}>
-                <Input placeholder="Link ảnh" />
-              </Form.Item>
             </div>
           </Col>
           <Col span={5}>

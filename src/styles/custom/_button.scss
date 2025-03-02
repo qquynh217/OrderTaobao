@@ -16,6 +16,9 @@
   span {
     font-size: 14px;
   }
+  &.small {
+    padding: 6px 24px;
+  }
 }
 
 .ant-btn-primary.black {
@@ -28,10 +31,19 @@
     background-color: #000;
     color: #fff;
   }
+  &.small {
+    padding: 6px 24px;
+  }
 }
 
 .ant-table-filter-dropdown-btns {
   .ant-btn-primary {
     padding: 0 10px;
+  }
+}
+
+.ant-popconfirm-buttons {
+  .ant-btn-primary {
+    padding: 0 12px;
   }
 }

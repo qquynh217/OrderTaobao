@@ -3,13 +3,15 @@ import {
   Checkbox,
   Col,
   DatePicker,
+  Empty,
   Form,
   Input,
+  Pagination,
   Row,
   Space,
 } from "antd";
 import OrderItem from "components/OrderItem";
-import { ORDER_STATUS } from "constants";
+import { ORDER_STATUS, PAGE_SIZE_OPTIONS, SORT_DIRECTIONS } from "constants";
 import { IOrder } from "constants/interface";
 import dayjs from "dayjs";
 import { FC, useEffect, useState } from "react";
@@ -24,6 +26,12 @@ const ListOrder: FC = () => {
     list: [],
     total: 0,
   });
+  const [queryParams, setQueryParams] = useState({
+    page: 1,
+    size: 10,
+    sort_by: "_id",
+    sort: SORT_DIRECTIONS.DESC,
+  });
   const handleSubmit = async (value: {
     key: any;
     isCheck: any;
@@ -34,59 +42,56 @@ const ListOrder: FC = () => {
         let params = {
           search: value.key,
           time_from: value.duration[0]
-            ? dayjs(value.duration[0]).valueOf()
+            ? dayjs(value.duration[0]).startOf("day").valueOf()
             : "",
-          time_to: value.duration[1] ? dayjs(value.duration[1]).valueOf() : "",
-          page: 1,
-          size: 10,
+          time_to: value.duration[1]
+            ? dayjs(value.duration[1]).endOf("day").valueOf()
+            : "",
         };
-
-        const res = await orderService.get(params);
-        console.log(res);
-        const result = res.data.data.result;
-        const list: Array<IOrder> = result.map((item: any) => ({
-          id: item.id,
-          code: item.code,
-          status: item.status || 1,
-          shippingType: item.type_delivery,
-          images: item.image_order
-            ? orderService.getImage({
-                order_id: item.id,
-                image_id: item.image_order,
-              })
-            : "",
-          products: item.products,
-          modified_time: item.modified_time,
-          created_time: item.created_time,
-        }));
-        setOrders({
-          total: res.data.data.pagination.total_records,
-          list: list,
+        setQueryParams({
+          ...queryParams,
+          ...params,
         });
       } catch (error) {
         console.log(error);
       }
     }
   };
-  const fetchOrders = async () => {
+  const fetchOrders = async (params: any) => {
     try {
-      await handleSubmit({
-        key: "",
-        isCheck: false,
-        duration: [null, null],
+      const res = await orderService.get(params);
+      const result = res.data.data.result;
+      const list: Array<IOrder> = result.map((item: any) => ({
+        ...item,
+        status: item.status || 1,
+        image_order: item.image_order,
+      }));
+
+      setOrders({
+        total: res.data.data.pagination.total_records || list.length,
+        list: list,
       });
     } catch (error) {
       console.log(error);
     }
   };
-
+  const handlePageChange = (page: number, pageSize: number) => {
+    setQueryParams({
+      ...queryParams,
+      size: pageSize,
+      page: page,
+    });
+  };
   useEffect(() => {
-    fetchOrders();
-  }, [status]);
+    fetchOrders({
+      ...queryParams,
+      status,
+    });
+  }, [status, queryParams]);
   return (
     <div className="list-order">
       <h2 className="title">
-        {(status && ORDER_STATUS.find((item) => item.key == +status)?.value) ||
+        {(status && ORDER_STATUS.find((item) => item.key == status)?.value) ||
           "Tất cả"}
       </h2>
       <div className="search-field">
@@ -99,7 +104,7 @@ const ListOrder: FC = () => {
             </Col>
             <Col span={8}>
               <Form.Item name="isCheck" valuePropName="checked" label={null}>
-                <Checkbox>Đặt cọc</Checkbox>
+                <Checkbox>Đóng gỗ</Checkbox>
               </Form.Item>
             </Col>
             <Col span={8} />
@@ -113,9 +118,9 @@ const ListOrder: FC = () => {
                 <Button type="primary" htmlType="submit">
                   Tìm kiếm
                 </Button>
-                <Button type="primary" className="export-btn">
+                {/* <Button type="primary" className="export-btn">
                   Xuất excel
-                </Button>
+                </Button> */}
               </Space>
             </Col>
           </Row>
@@ -126,18 +131,34 @@ const ListOrder: FC = () => {
         <b>{orders.total}</b> bản ghi
       </p>
 
-      {!status || (status && +status != 2) ? (
-        <div className="list-order_wrapper">
-          {orders.list.map((order) => (
-            <OrderItem item={order} status={+(status || 0)} key={order.id} />
-          ))}
-        </div>
+      {orders.list.length > 0 ? (
+        !status || (status && +status != 2) ? (
+          <div className="list-order_wrapper">
+            {orders.list.map((order) => (
+              <OrderItem item={order} status={+(status || 0)} key={order.id} />
+            ))}
+          </div>
+        ) : (
+          <div className="list-order_wrapper list-order-deposit">
+            {orders.list.map((order) => (
+              <OrderItem item={order} status={+(status || 0)} key={order.id} />
+            ))}
+          </div>
+        )
       ) : (
-        <div className="list-order_wrapper list-order-deposit">
-          {orders.list.map((order) => (
-            <OrderItem item={order} status={+(status || 0)} key={order.id} />
-          ))}
-        </div>
+        <Empty description="Không có đơn hàng" />
+      )}
+      {orders.list.length > 0 && (
+        <Pagination
+          showSizeChanger
+          total={orders.total}
+          pageSizeOptions={PAGE_SIZE_OPTIONS}
+          current={queryParams.page || 1}
+          pageSize={queryParams.size || PAGE_SIZE_OPTIONS[0]}
+          onChange={handlePageChange}
+          align="center"
+          style={{ marginTop: 20 }}
+        />
       )}
     </div>
   );

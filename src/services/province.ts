@@ -6,7 +6,14 @@ class Provinces {
   searchProvice = async () => {
     const res = await fetch("/src/resources/provinces.json");
     const data = await res.json();
-    return data.data;
+    const province = data.data.sort((a: any, b: any) => {
+      if (a.id == "01" && b.id != "01") return -1;
+      if (b.id == "01" && a.id != "01") return 1;
+      if (a.id == "79" && b.id != "01" && b.id != "79") return -1;
+      if (b.id == "79" && a.id != "01" && a.id != "79") return 1;
+      return 0;
+    });
+    return province;
   };
 
   getDistrictsOfProvince = async (params: { province: string | number }) => {

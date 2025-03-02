@@ -3,9 +3,10 @@ import showMessage from "components/Message";
 import { EMAIL_PATTERN, PHONE_PATTERN, WAREHOUSES } from "constants";
 import { IUser } from "constants/interface";
 import { FC, useEffect, useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { ROUTE_URL } from "routes";
 import { provinceService } from "services/province";
+import { userService } from "services/user";
 
 const SignupForm: FC = () => {
   const [form] = Form.useForm();
@@ -15,6 +16,8 @@ const SignupForm: FC = () => {
 
   // State cho tỉnh/thành phố và quận/huyện đã chọn
   const [selectedProvince, setSelectedProvince] = useState("");
+
+  const navigate = useNavigate();
 
   // Tải danh sách tỉnh/thành phố từ API
   useEffect(() => {
@@ -52,13 +55,36 @@ const SignupForm: FC = () => {
     form.setFieldValue("district", ""); // Reset quận/huyện khi thay đổi tỉnh
     setDistricts([]); // Clear quận/huyện khi thay đổi tỉnh
   };
-  const handleSubmit = (value: IUser) => {
-    console.log(value);
+  const handleSubmit = async (value: IUser & { password: string }) => {
+    const {
+      email,
+      password,
+      name,
+      phone_number,
+      storage,
+      province,
+      district,
+      address_detail,
+    } = value;
+
     try {
+      await userService.signup({
+        email,
+        password,
+        name,
+        phone_number,
+        storage,
+        province,
+        district,
+        address_detail,
+      });
+
       showMessage("success", "Đăng ký tài khoản thành công!");
       form.resetFields();
-    } catch (error) {
-      showMessage("error", "Đăng ký không thành công!");
+      navigate(ROUTE_URL.SIGNUP);
+    } catch (error: any) {
+      const msg = error.response?.data?.error || "Đăng ký không thành công!";
+      showMessage("error", msg);
     }
   };
 
@@ -71,7 +97,7 @@ const SignupForm: FC = () => {
       onFinish={handleSubmit}
     >
       <Form.Item
-        name="Email"
+        name="email"
         label="Email"
         required
         rules={[
@@ -117,7 +143,7 @@ const SignupForm: FC = () => {
         <Input.Password placeholder="Nhập lại mật khẩu" />
       </Form.Item>
       <Form.Item
-        name="fullname"
+        name="name"
         label="Họ tên"
         required
         rules={[{ required: true, message: "Vui lòng điền họ tên của bạn." }]}
@@ -127,7 +153,7 @@ const SignupForm: FC = () => {
       <Row gutter={15}>
         <Col span={12}>
           <Form.Item
-            name="phone"
+            name="phone_number"
             label="Số điện thoại"
             required
             rules={[
@@ -148,7 +174,7 @@ const SignupForm: FC = () => {
         </Col>
         <Col span={12}>
           <Form.Item
-            name="warehouse"
+            name="storage"
             label="Hàng của bạn về kho"
             rules={[{ required: true, message: "Vui lòng chọn kho." }]}
           >
@@ -201,7 +227,7 @@ const SignupForm: FC = () => {
         </Col>
       </Row>
       <Form.Item
-        name="addressDetail"
+        name="address_detail"
         label="Địa chỉ chi tiết"
         required
         rules={[{ required: true, message: "Vui lòng điền địa chỉ chi tiết." }]}

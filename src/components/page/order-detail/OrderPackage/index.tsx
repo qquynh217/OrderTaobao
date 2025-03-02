@@ -1,34 +1,19 @@
 import { Table, Tooltip } from "antd";
 import NumberFormat from "components/NumberFormat";
 import { DATE_FORMAT } from "constants";
-import { IOrder } from "constants/interface";
-import { FC, useMemo } from "react";
+import { useOrderContext } from "context/OrderContext";
+import { FC } from "react";
 import { FaCircleExclamation } from "react-icons/fa6";
-import { formatDate, getOrderStatus } from "utils";
+import { formatDate } from "utils";
 
-const OrderPackage: FC<{ order: IOrder }> = ({ order }) => {
-  const packages = useMemo(() => {
-    return [
-      {
-        status: getOrderStatus(order.status).value,
-        weight: order.weight || 0,
-        weightBasedVolumn: order.weightBasedVolumn || 0,
-        weightRate: order.weightRate || 0,
-        totalWeightFee: order.totalWeightFee || 0,
-        woodPackagingFee: order.woodPackagingFee || 0,
-        extraShippingFee: order.extraShippingFee || 0,
-        transitToVnAt: order.transitToVnAt,
-        stockInVnAt: order.stockInVnAt,
-        returnAt: order.returnAt,
-        sellerShippedAt: order.sellerShippedAt,
-      },
-    ];
-  }, [order]);
+const OrderPackage: FC = () => {
+  const { order } = useOrderContext();
   const packageCol = [
     {
       title: "KIỆN HÀNG",
       dataIndex: "status",
       key: "status",
+      render: () => order.status,
     },
     {
       title: "CÂN NẶNG",
@@ -43,7 +28,7 @@ const OrderPackage: FC<{ order: IOrder }> = ({ order }) => {
             </Tooltip>
           </p>
           <p className="d-flex-center gap5">
-            <NumberFormat value={rec.weightBasedVolumn} suffix="kg" />
+            <NumberFormat value={rec.weight_base_volumn} suffix="kg" />
             <Tooltip title="Quy đổi thể tích 0.00 x 0.00 x 0.00">
               <FaCircleExclamation />
             </Tooltip>
@@ -53,58 +38,55 @@ const OrderPackage: FC<{ order: IOrder }> = ({ order }) => {
     },
     {
       title: "ĐƠN GIÁ",
-      dataIndex: "weightRate",
-      key: "weightRate",
+      dataIndex: "weight_rate",
+      key: "weight_rate",
       render: (val: number) => <NumberFormat value={val} suffix="đ" />,
     },
     {
       title: "THÀNH TIỀN",
-      dataIndex: "totalWeightFee",
-      key: "totalWeightFee",
+      dataIndex: "total_weight_price",
+      key: "total_weight_price",
+      render: (val: number) => <NumberFormat value={val} suffix="đ" />,
     },
-    {
-      title: "CƯỚC THÊM",
-      dataIndex: "woodPackagingFee",
-      key: "woodPackagingFee",
-      render: (val: number, rec: any) => (
-        <>
-          <p className="d-flex-center gap5">
-            <NumberFormat value={val} suffix="đ" />
-            <Tooltip title="Cước đóng gỗ">
-              <FaCircleExclamation />
-            </Tooltip>
-          </p>
-          <p className="d-flex-center gap5">
-            <NumberFormat value={rec.extraShippingFee} suffix="đ" />
-            <Tooltip title="Cước vận chuyển phát sinh">
-              <FaCircleExclamation />
-            </Tooltip>
-          </p>
-        </>
-      ),
-    },
+    // {
+    //   title: "CƯỚC THÊM",
+    //   dataIndex: "woodPackagingFee",
+    //   key: "woodPackagingFee",
+    //   render: (val: number, rec: any) => (
+    //     <>
+    //       <p className="d-flex-center gap5">
+    //         <NumberFormat value={val} suffix="đ" />
+    //         <Tooltip title="Cước đóng gỗ">
+    //           <FaCircleExclamation />
+    //         </Tooltip>
+    //       </p>
+    //       <p className="d-flex-center gap5">
+    //         <NumberFormat value={rec.extraShippingFee} suffix="đ" />
+    //         <Tooltip title="Cước vận chuyển phát sinh">
+    //           <FaCircleExclamation />
+    //         </Tooltip>
+    //       </p>
+    //     </>
+    //   ),
+    // },
     {
       title: "NGÀY",
-      dataIndex: "sellerShippedAt",
-      key: "sellerShippedAt",
+      dataIndex: "ship_at",
+      key: "ship_at",
+      width: "230px",
       render: (val: string, rec: any) => (
         <>
-          <div className="d-flex-center gap5">
-            <p>Người bán giao: </p>
-            <b>{formatDate(val, DATE_FORMAT)}</b>
-          </div>
-          <div className="d-flex-center gap5">
-            <p>Trên đường về VN: </p>
-            <b>{formatDate(rec.transitToVnAt, DATE_FORMAT)}</b>
-          </div>
-          <div className="d-flex-center gap5">
-            <p>Trong kho VN: </p>
-            <b>{formatDate(rec.stockInVnAt, DATE_FORMAT)}</b>
-          </div>
-          <div className="d-flex-center gap5">
-            <p>Đã trả: </p>
-            <b>{formatDate(rec.returnAt, DATE_FORMAT)}</b>
-          </div>
+          {[
+            { label: "Người bán giao", value: val },
+            { label: "Trên đường về VN", value: rec.transit_at_vn },
+            { label: "Trong kho VN:", value: rec.stock_at_vn },
+            { label: "Đã trả", value: rec.return_at },
+          ].map((item, id) => (
+            <div className="d-flex-center gap5 justify-between" key={id}>
+              <p>{item.label}: </p>
+              <b>{formatDate(item.value, DATE_FORMAT)}</b>
+            </div>
+          ))}
         </>
       ),
     },
@@ -112,7 +94,11 @@ const OrderPackage: FC<{ order: IOrder }> = ({ order }) => {
   return (
     <div className="order-package">
       <h2>Kiện hàng</h2>
-      <Table columns={packageCol} dataSource={packages} pagination={false} />
+      <Table
+        columns={packageCol}
+        dataSource={order.packages}
+        pagination={false}
+      />
     </div>
   );
 };

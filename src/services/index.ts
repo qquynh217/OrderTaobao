@@ -20,10 +20,15 @@ axiosInstance.interceptors.response.use(
     return response;
   },
   function (error: any) {
-    const msg = error.response?.data?.data?.msg;
+    const msg = error.response?.statusText || "";
     const status = error.response?.status;
+    const path = error.response?.data?.path || "";
 
-    if (status == 401 && msg.toLowerCase().includes("unauthorized")) {
+    if (
+      status == 401 &&
+      msg.toLowerCase().includes("unauthorized") &&
+      !path.includes("login")
+    ) {
       // showNotification(
       //   "warning",
       //   "Token expired",

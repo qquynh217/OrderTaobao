@@ -17,6 +17,7 @@ export default defineConfig({
       i18n: path.resolve("./src/i18n"),
       hoc: path.resolve("./src/hoc"),
       routes: path.resolve("./src/routes"),
+      context: path.resolve("./src/context"),
     },
   },
   plugins: [react()],

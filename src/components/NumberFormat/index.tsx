@@ -4,12 +4,14 @@ const NumberFormat = ({
   value,
   decimalScale = 2,
   suffix,
+  emptyText = "",
 }: {
   value: any;
   decimalScale?: number;
   suffix?: string;
+  emptyText?: string;
 }) => {
-  return (
+  return !isNaN(parseFloat(value)) && isFinite(value) ? (
     <NumericFormat
       thousandSeparator
       displayType="text"
@@ -17,6 +19,8 @@ const NumberFormat = ({
       value={value}
       suffix={suffix ? " " + suffix : undefined}
     />
+  ) : (
+    emptyText
   );
 };
 

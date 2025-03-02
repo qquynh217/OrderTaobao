@@ -29,8 +29,7 @@ export const userStore = create<IUser & IUserAction>()(
       partialize: (state) => ({
         token: state.token,
         email: state.email,
-        id: state.id,
-        fullname: state.fullname,
+        name: state.name,
         role: state.role,
       }),
     }

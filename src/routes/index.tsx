@@ -4,10 +4,19 @@ import PublicLayout from "pages/layout/Public";
 import ListOrder from "pages/order/list-order";
 import CreateOrder from "pages/order/create-order";
 import SignUp from "pages/signup";
-import { FaBoxArchive, FaCartShopping, FaGlobe } from "react-icons/fa6";
+import {
+  FaBoxArchive,
+  FaCartShopping,
+  FaGlobe,
+  FaUserGroup,
+  FaWallet,
+} from "react-icons/fa6";
 import { Navigate, createBrowserRouter } from "react-router-dom";
-import { ORDER_STATUS } from "constants";
-import OrderDetail from "pages/order-detail";
+import { ORDER_STATUS, USER_ROLE } from "constants";
+import OrderDetail from "pages/order/detail";
+import Transaction from "pages/transaction";
+import OrderAdmin from "pages/order-admin";
+import UserAdmin from "pages/user-admin";
 
 export const ROUTE_URL = {
   HOME: "/",
@@ -22,6 +31,11 @@ export const ROUTE_URL = {
   PROFILE: "/thong-tin-ca-nhan",
   ORDER_CREATE: "/don-hang/tao-don",
   ORDER_DETAIL: "/don-hang/chi-tiet",
+  TRANSACTION: "/don-hang/giao-dich",
+  ADMIN: "/quan-ly",
+  ORDER_ADMIN: "/quan-ly/don-hang",
+  USER_ADMIN: "/quan-ly/khach-hang",
+  ORDER_ADMIN_DETAIL: "/quan-ly/don-hang/:orderId",
 };
 const routes = [
   {
@@ -62,6 +76,28 @@ const routes = [
         path: ROUTE_URL.ORDER_DETAIL + "/:orderId",
         element: <OrderDetail />,
       },
+      {
+        path: ROUTE_URL.TRANSACTION,
+        element: <Transaction />,
+      },
+    ],
+  },
+  {
+    path: ROUTE_URL.ADMIN,
+    element: <PriveLayout />,
+    children: [
+      {
+        path: ROUTE_URL.ORDER_ADMIN,
+        element: <OrderAdmin />,
+      },
+      {
+        path: ROUTE_URL.USER_ADMIN,
+        element: <UserAdmin />,
+      },
+      {
+        path: ROUTE_URL.ORDER_ADMIN_DETAIL,
+        element: <OrderDetail />,
+      },
     ],
   },
   {
@@ -77,24 +113,24 @@ export const sidebarItems = [
     key: ROUTE_URL.ORDER_CREATE,
     icon: <FaGlobe />,
     label: "Tạo đơn từ website",
-    role: ["user", "admin"],
+    role: [USER_ROLE["USER"]],
   },
 
   {
     key: ROUTE_URL.ORDER,
     icon: <FaBoxArchive />,
     label: "Đơn hàng",
-    role: ["user", "admin"],
+    role: [USER_ROLE["USER"]],
     children: [
       {
         key: ROUTE_URL.ORDER_ALL,
         label: "Tất cả",
-        role: ["user", "admin"],
+        role: [USER_ROLE["USER"]],
       },
       ...ORDER_STATUS.map((item) => ({
         key: ROUTE_URL.ORDER_ALL + `/${item.key}`,
         label: item.value,
-        role: ["user", "admin"],
+        role: [USER_ROLE["USER"]],
       })),
     ],
   },
@@ -102,6 +138,24 @@ export const sidebarItems = [
     key: ROUTE_URL.CART,
     icon: <FaCartShopping />,
     label: "Giỏ hàng",
-    role: ["user", "admin"],
+    role: [USER_ROLE["USER"]],
+  },
+  {
+    key: ROUTE_URL.TRANSACTION,
+    icon: <FaWallet />,
+    label: "Lịch sử giao dịch",
+    role: [USER_ROLE["USER"]],
+  },
+  {
+    key: ROUTE_URL.ORDER_ADMIN,
+    icon: <FaBoxArchive />,
+    label: "Quản lý đơn hàng",
+    role: [USER_ROLE["ADMIN"]],
+  },
+  {
+    key: ROUTE_URL.USER_ADMIN,
+    icon: <FaUserGroup />,
+    label: "Quản lý khách hàng",
+    role: [USER_ROLE["ADMIN"]],
   },
 ];

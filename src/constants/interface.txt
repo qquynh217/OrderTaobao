@@ -1,17 +1,18 @@
 export interface IUser {
-  id: number | string;
+  id?: number | string;
   email: string;
-  fullname: string;
-  phone: string;
+  name: string;
+  phone_number: string;
   token: string;
-  warehouse?: string;
-  district?: string;
-  province?: string;
-  addressDetail?: string;
+  storage: string;
+  district: string;
+  province: string;
+  address_detail: string;
   role: string;
   balance: number;
   transferContent?: string;
   avatar?: string;
+  exp?: number;
 }
 
 export interface IProduct {
@@ -22,51 +23,71 @@ export interface IProduct {
   number: number;
   price: number; // giá theo tệ
   note?: string;
-  image?: string;
+  link_product_image?: string;
 }
-
+export interface IPackage {
+  id: number | string;
+  weight?: number; // cân nặng
+  weight_rate?: number; // đơn giá cân nặng
+  total_weight_price: number;
+  ship_at?: string; // thời gian người bán giao
+  transit_at_vn?: string; // Trên đường về VN
+  stock_at_vn?: string; // Trong kho VN
+  return_at?: string; // Thời gian trả hàng
+  weight_base_volumn?: number; // cân nặng theo thể tích
+  status?: string;
+}
 export type IOrderProduct = IProduct & {
-  qtyOrder: number;
-  qtyReceive: number;
+  number_order: number;
+  number_receive: number;
   staffNote?: string;
 };
 export interface IOrder {
   id: number | string;
   code: number | string;
-  status: number; // trạng thái đơn
-  images?: string; // ảnh đơn
-  shippingType: string; // phương thức vận chuyển
+  status: string; // trạng thái đơn
+  image_order: string; // ảnh đơn
+  type_delivery: string; // phương thức vận chuyển
   products: Array<IOrderProduct>; // danh sách sản phẩm
-  noteForOwner: string; // ghi chú cho người tạo
-  noteForStaff: string; // ghi chú cho staff
-  orderFeePercent: number; // % phí mua hàng
-  exchangeRate: number; // tỉ giá
-  stockWarehouse: string | number; // Hàng về kho
-  userWarehouse: string | number; // Kho khách chọn
-  extraFee?: number; // phí trả thêm
-  shippingCnFee?: number; // phí ship nội địa TQ
-  tallyFee?: number; // phí kiểm đếm
-  itemTotalCost: number;
-  totalFee: number; // tổng phí
-  totalPaid: number; // đã trả
+  packages: Array<IPackage>;
 
-  depositAt?: string; // Thời gian đặt cọc
-  purchasedAt?: string; // Thời gian mua (bên order mua)
-  transitToVnAt?: string; // Trên đường về VN
-  stockInVnAt?: string; // Trong kho VN
-  returnAt?: string; // Thời gian trả hàng
-  sellerShippedAt?: string; // thời gian người bán giao
+  note_owner: string; // ghi chú cho người tạo
+  note_staff: string; // ghi chú cho staff
+  order_fee_percent: number; // % phí mua hàng
+  exchange_rate: number; // tỉ giá
+  number_package?: number;
 
-  weightBasedFee?: number; // tiền cân thực
-  volumnBasedFee?: number; // tiền cân quy đổi từ thể tích
-  totalWeightFee?: number; // tiền cân tính
-  woodPackagingFee?: number; // phí đóng gỗ
-  isWoodPackaging?: boolean; // đóng gỗ?
-  extraShippingFee?: number; // Cước vận phát sinh
-  weight?: number; // cân nặng
-  weightBasedVolumn?: number; // cân nặng theo thể tích
-  weightRate?: number; // dơn giá cân nặng
+  stock_storage: string | number; // Hàng về kho
+  user_storage: string | number; // Kho khách chọn
+
+  extra_fee?: number; // phí trả thêm
+  ship_cn_fee?: number; // phí ship nội địa TQ
+  tally_fee?: number; // phí kiểm đếm
+  item_total_cost: number; // tiền hàng
+  total_fee: number; // tổng giá trị đơn hàng
+  total_paid: number; // đã trả
+
+  deposit_at?: string; // Thời gian đặt cọc
+  purchased_at?: string; // Thời gian mua (bên order mua)
+
+  weight_fee?: number; // tiền cân thực
+  total_weight_fee?: number; // tiền cân tính
+  wood_package_fee?: number; // phí đóng gỗ
+  is_wood_package?: boolean; // đóng gỗ?
+  extra_ship_fee?: number; // Cước vận phát sinh
+  volumn_fee?: number; // tiền cân quy đổi từ thể tích
 
   modified_time?: string | number;
   created_time?: string | number;
+}
+
+export interface ITransaction {
+  trans_code: string;
+  order_code?: string;
+  order_id?: string;
+  type: string;
+  created_time: string | number;
+  description: string;
+  amount: number;
+  balance: number;
 }
