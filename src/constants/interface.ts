@@ -26,7 +26,7 @@ export interface IProduct {
   link_product_image?: string;
 }
 export interface IPackage {
-  id: number | string;
+  code: number | string;
   weight?: number; // cân nặng
   weight_rate?: number; // đơn giá cân nặng
   total_weight_price: number;
@@ -35,12 +35,13 @@ export interface IPackage {
   stock_at_vn?: string; // Trong kho VN
   return_at?: string; // Thời gian trả hàng
   weight_base_volumn?: number; // cân nặng theo thể tích
+  weight_base_volumn_rate?: number; // cân nặng theo thể tích
   status?: string;
 }
 export type IOrderProduct = IProduct & {
   number_order: number;
   // number_receive: number;
-  staff_note?: string;
+  note_staff?: string;
 };
 export interface IOrder {
   id: string;
@@ -70,6 +71,7 @@ export interface IOrder {
   deposit_at?: string; // Thời gian đặt cọc
   purchased_at?: string; // Thời gian mua (bên order mua)
 
+  weight_base_volumn?: number; // tiền cân quy đổi
   weight_fee?: number; // tiền cân thực
   total_weight_fee?: number; // tiền cân tính
   wood_package_fee?: number; // phí đóng gỗ
@@ -79,6 +81,18 @@ export interface IOrder {
 
   modified_time?: string | number;
   created_time?: string | number;
+
+  custom_percent_paid?: string | number | null;
+
+  // Thông tin user
+  name?: string;
+  phone_number?: string;
+  address_detail?: string;
+  email?: string;
+  created_by?: string;
+  province?: string;
+  district?: string;
+  full_address?: string;
 }
 
 export interface ITransaction {

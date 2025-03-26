@@ -3,7 +3,7 @@ import NumberFormat from "components/NumberFormat";
 import { FC } from "react";
 import { FaRegPenToSquare } from "react-icons/fa6";
 import { TbLogout } from "react-icons/tb";
-import { Link, NavLink } from "react-router-dom";
+import { NavLink } from "react-router-dom";
 import emptyAva from "resources/images/empty-avatar.png";
 import { ROUTE_URL } from "routes";
 import { configStore } from "store/configStore";
@@ -27,7 +27,7 @@ const HeaderPrivate: FC<{ isCollapsed: boolean }> = ({ isCollapsed }) => {
         </div>
         <div className="header-right">
           <p>Tỉ giá: {exchange_rate}</p>
-          <Link to={ROUTE_URL.CART}>Giỏ hàng</Link>
+          {/* <Link to={ROUTE_URL.CART}>Giỏ hàng</Link> */}
           <Dropdown
             menu={{
               items: [

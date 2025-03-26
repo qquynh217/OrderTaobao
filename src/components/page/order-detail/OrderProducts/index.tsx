@@ -94,8 +94,8 @@ const OrderProducts: FC = () => {
     },
     {
       title: "GHI CHÚ NHÂN VIÊN",
-      dataIndex: "staffNote",
-      key: "staffNote",
+      dataIndex: "note_staff",
+      key: "note_staff",
       width: "15%",
     },
     {

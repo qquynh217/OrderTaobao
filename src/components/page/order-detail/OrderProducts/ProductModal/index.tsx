@@ -26,6 +26,7 @@ const ProductModal: FC<{
       const newProducts = [...products];
       newProducts[index] = value;
       await handleUpdateOrder(newProducts, "products");
+      handleClose();
     }
   };
   return (
@@ -100,7 +101,7 @@ const ProductModal: FC<{
             </Form.Item>
           </Col>
           <Col span={24}>
-            <Form.Item name="staff_note" label="Ghi chú nhân viên">
+            <Form.Item name="note_staff" label="Ghi chú nhân viên">
               <Input.TextArea />
             </Form.Item>
           </Col>

@@ -1,22 +1,16 @@
+import { ORDER_STATUS, USER_ROLE } from "constants";
 import HomePage from "pages/home";
 import PriveLayout from "pages/layout/Private";
 import PublicLayout from "pages/layout/Public";
-import ListOrder from "pages/order/list-order";
-import CreateOrder from "pages/order/create-order";
-import SignUp from "pages/signup";
-import {
-  FaBoxArchive,
-  FaCartShopping,
-  FaGlobe,
-  FaUserGroup,
-  FaWallet,
-} from "react-icons/fa6";
-import { Navigate, createBrowserRouter } from "react-router-dom";
-import { ORDER_STATUS, USER_ROLE } from "constants";
-import OrderDetail from "pages/order/detail";
-import Transaction from "pages/transaction";
 import OrderAdmin from "pages/order-admin";
+import CreateOrder from "pages/order/create-order";
+import OrderDetail from "pages/order/detail";
+import ListOrder from "pages/order/list-order";
+import SignUp from "pages/signup";
+import Transaction from "pages/transaction";
 import UserAdmin from "pages/user-admin";
+import { FaBoxArchive, FaGlobe, FaUserGroup, FaWallet } from "react-icons/fa6";
+import { Navigate, createBrowserRouter } from "react-router-dom";
 
 export const ROUTE_URL = {
   HOME: "/",
@@ -134,12 +128,12 @@ export const sidebarItems = [
       })),
     ],
   },
-  {
-    key: ROUTE_URL.CART,
-    icon: <FaCartShopping />,
-    label: "Giỏ hàng",
-    role: [USER_ROLE["USER"]],
-  },
+  // {
+  //   key: ROUTE_URL.CART,
+  //   icon: <FaCartShopping />,
+  //   label: "Giỏ hàng",
+  //   role: [USER_ROLE["USER"]],
+  // },
   {
     key: ROUTE_URL.TRANSACTION,
     icon: <FaWallet />,

@@ -126,4 +126,6 @@ export const ORDER_FIELD_NAME: { [key: string]: string } = {
   status: "trạng thái",
   stock_storage: "hàng ở kho",
   products: "danh sách hàng",
+  ship_cn_fee: "phí ship nội địa TQ",
+  tally_fee: "phí kiểm đếm",
 };

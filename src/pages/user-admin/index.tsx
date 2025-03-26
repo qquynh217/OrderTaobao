@@ -4,6 +4,7 @@ import {
   DatePicker,
   Form,
   Input,
+  Popconfirm,
   Row,
   Space,
   Table,
@@ -11,13 +12,18 @@ import {
   TableProps,
 } from "antd";
 import { FilterValue } from "antd/es/table/interface";
+import showMessage from "components/Message";
+import NumberFormat from "components/NumberFormat";
+import UserModal from "components/page/user/UserModal";
 import { PAGE_SIZE_OPTIONS, SORT_DIRECTIONS } from "constants";
 import { IUser } from "constants/interface";
 import dayjs from "dayjs";
 import { get } from "lodash";
 import { FC, useEffect, useState } from "react";
+import { AiFillDelete } from "react-icons/ai";
+import { RiEdit2Fill } from "react-icons/ri";
 import { userService } from "services/user";
-import { handleSortOrder } from "utils";
+import { formatDate, handleSortOrder } from "utils";
 
 const { RangePicker } = DatePicker;
 
@@ -28,6 +34,7 @@ const UserAdmin: FC = () => {
     sort_by: "_id",
     sort: SORT_DIRECTIONS.DESC,
   });
+  const [isOpenModal, setIsOpenModal] = useState<string>("");
   const [users, setUsers] = useState<{ list: Array<IUser>; total: 0 }>({
     list: [],
     total: 0,
@@ -92,6 +99,28 @@ const UserAdmin: FC = () => {
       sort: handleSortOrder(order),
     });
   };
+  const handleUpdate = async (value: IUser) => {
+    try {
+      const res = await userService.update({ userId: value.id + "", ...value });
+      if (res.status == 200) {
+        showMessage("success", "Sửa thông tin thành công!");
+        fetchOrders(queryParams);
+      }
+    } catch (error) {
+      console.log(error);
+      showMessage("error", "Sửa thông tin không thành công!");
+    }
+  };
+  const handleDeleteUser = async (userId: string) => {
+    try {
+      const res = await userService.delete(userId);
+      if (res.status == 200) {
+        showMessage("success", "Xóa tài khoản thành công.");
+      }
+    } catch (error) {
+      showMessage("error", "Xóa tài khoản không thành công.");
+    }
+  };
   const columns: TableProps<IUser>["columns"] = [
     {
       title: "STT",
@@ -103,21 +132,84 @@ const UserAdmin: FC = () => {
       title: "Tên",
       dataIndex: "name",
       key: "name",
+      width: "15%",
     },
     {
-      title: "Email",
+      title: "Email - SĐT",
       dataIndex: "email",
       key: "email",
-    },
-    {
-      title: "SĐT",
-      dataIndex: "phone_number",
-      key: "phone_number",
+      width: "15%",
+      render: (val, rec) => (
+        <>
+          <b>{val}</b>
+          <p>{rec.phone_number}</p>
+        </>
+      ),
     },
     {
       title: "Địa chỉ",
-      dataIndex: "phone_number",
-      key: "phone_number",
+      dataIndex: "address_detail",
+      key: "address_detail",
+    },
+    {
+      title: "Kho",
+      dataIndex: "storage",
+      key: "storage",
+      width: 100,
+    },
+    {
+      title: "Số dư",
+      dataIndex: "balance",
+      key: "balance",
+      align: "center",
+      width: 150,
+      render: (val) => (
+        <b>
+          <NumberFormat value={val} suffix="đ" />
+        </b>
+      ),
+    },
+    {
+      title: "Chức năng",
+      dataIndex: "role",
+      key: "role",
+      width: 100,
+    },
+    {
+      title: "Ngày tạo",
+      dataIndex: "created_time",
+      key: "created_time",
+      render: (val) => formatDate(val),
+      width: 110,
+    },
+    {
+      title: "Action",
+      dataIndex: "id",
+      key: "id",
+      render: (val) => (
+        <Space>
+          <Button
+            onClick={() => {
+              setIsOpenModal(val);
+            }}
+          >
+            <RiEdit2Fill />
+          </Button>
+          <Popconfirm
+            title="Xóa user"
+            description="Bạn có chắc chắn xóa user này không?"
+            onConfirm={() => {
+              handleDeleteUser(val);
+            }}
+            okText="Có"
+            cancelText="Không"
+          >
+            <Button danger>
+              <AiFillDelete />
+            </Button>
+          </Popconfirm>
+        </Space>
+      ),
     },
   ];
 
@@ -157,6 +249,11 @@ const UserAdmin: FC = () => {
         columns={columns}
         onChange={onChangeTable}
         pagination={{ pageSizeOptions: PAGE_SIZE_OPTIONS }}
+      />
+      <UserModal
+        isOpen={isOpenModal}
+        setIsOpen={setIsOpenModal}
+        handleUpdate={handleUpdate}
       />
     </div>
   );

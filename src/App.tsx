@@ -11,7 +11,7 @@ import { configStore } from "store/configStore";
 
 function App() {
   const { handleLogout, handleUserLogin } = userStore();
-  const { setExchangeRate } = configStore();
+  const { setExchangeRate, setWeights } = configStore();
   const handleCheckUserLogin = () => {
     try {
       const user_storage =
@@ -34,8 +34,10 @@ function App() {
   const getConfig = async () => {
     try {
       const res = await configService.get();
-      const data = res.data.data.result?.exchange_rate || 0;
-      setExchangeRate(data);
+      const exchange_rate = res.data.data.result?.exchange_rate || 0;
+      const weights = res.data.data.result?.weight || [];
+      setExchangeRate(exchange_rate);
+      setWeights(weights);
     } catch (error) {
       console.log(error);
     }

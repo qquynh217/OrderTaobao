@@ -32,16 +32,10 @@ class Provinces {
       return [];
     }
   };
-  getLocationText = async (params: {
-    province: string;
-    district: string;
-    ward: string;
-  }) => {
-    const { province, district, ward } = params;
+  getLocationText = async (params: { province: string; district: string }) => {
+    const { province, district } = params;
     let id = province;
-    if (ward != "0") {
-      id = ward;
-    } else if (district != "0") {
+    if (district != "0") {
       id = district;
     }
 

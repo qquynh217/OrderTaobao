@@ -8,6 +8,7 @@ interface IUserAction {
   handleUserLogin: (user: IUser) => void;
   handleLogout: () => void;
   setToken: (token: string) => void;
+  setBalance: (balance: number) => void;
 }
 
 export const userStore = create<IUser & IUserAction>()(
@@ -22,6 +23,9 @@ export const userStore = create<IUser & IUserAction>()(
       },
       handleLogout: () => {
         set({ ...initUser });
+      },
+      setBalance(balance) {
+        set({ balance: balance });
       },
     }),
     {

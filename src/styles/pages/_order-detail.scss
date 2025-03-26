@@ -10,8 +10,7 @@
     border: 1px solid #f2f4f9;
   }
   .order-img {
-    width: 100px;
-    height: 100px;
+    height: 140px;
     object-fit: cover;
     box-shadow: rgba(50, 50, 93, 0.25) 0px 2px 5px -1px,
       rgba(0, 0, 0, 0.3) 0px 1px 3px -1px;
@@ -48,6 +47,39 @@
       margin-top: 20px;
       border-radius: 8px;
       background-color: #f4a460;
+    }
+  }
+  .order-info_header {
+    .order-header_inner {
+      display: flex;
+      .d-flex {
+        width: 50%;
+        padding-right: 30px;
+      }
+      .user-info {
+        width: 50%;
+        border-left: 1px solid #adadad;
+        padding-left: 30px;
+        padding-right: 30px;
+        .section-user {
+          display: flex;
+          gap: 10px;
+          line-height: 1.8;
+          b {
+            min-width: 78px;
+          }
+        }
+      }
+    }
+    .custom-deposit {
+      margin-top: 20px;
+      align-items: center;
+      .ant-input-affix-wrapper {
+        max-width: 200px;
+      }
+      button {
+        padding: 4px 11px;
+      }
     }
   }
 }

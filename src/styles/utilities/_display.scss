@@ -7,6 +7,9 @@
 .gap5 {
   gap: 5px;
 }
+.gap30 {
+  gap: 30px;
+}
 .d-flex-center {
   display: flex;
   align-items: center;
@@ -16,4 +19,8 @@
 }
 .justify-center {
   justify-content: center;
+}
+.d-flex-column {
+  display: flex;
+  flex-direction: column;
 }

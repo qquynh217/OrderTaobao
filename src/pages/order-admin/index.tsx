@@ -22,7 +22,12 @@ import { FC, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { ROUTE_URL } from "routes";
 import { orderService } from "services/order";
-import { getOrderStatus, getShippingType, handleSortOrder } from "utils";
+import {
+  formatDate,
+  getOrderStatus,
+  getShippingType,
+  handleSortOrder,
+} from "utils";
 import { get } from "lodash";
 const { RangePicker } = DatePicker;
 
@@ -119,6 +124,14 @@ const OrderAdmin: FC = () => {
       title: "Khách hàng",
       dataIndex: "created_by",
       key: "created_by",
+      width: "15%",
+      render: (val, rec) => (
+        <div>
+          <b>{rec.name}</b>
+          <p>{val}</p>
+          <p>{rec.phone_number}</p>
+        </div>
+      ),
     },
     {
       title: "Đơn hàng",
@@ -217,6 +230,13 @@ const OrderAdmin: FC = () => {
       title: "Ghi chú",
       dataIndex: "note_staff",
       key: "note_staff",
+    },
+    {
+      title: "Ngày tạo",
+      dataIndex: "created_time",
+      key: "created_time",
+      width: 120,
+      render: (val) => formatDate(val, "DD-MM-YYYY HH:mm:ss"),
     },
     {
       title: "#",

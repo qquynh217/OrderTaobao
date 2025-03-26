@@ -1,5 +1,5 @@
 import { Input, Tooltip, Typography } from "antd";
-import { FC, useState } from "react";
+import { FC, useEffect, useState } from "react";
 import { RiEdit2Fill } from "react-icons/ri";
 
 const { Paragraph } = Typography;
@@ -21,7 +21,9 @@ const EditableParagraph: FC<{
       handleUpdate(e.target.value, field);
     }
   };
-
+  useEffect(() => {
+    setText(initvalue ?? "");
+  }, [initvalue]);
   return (
     <div className="editable-paragraph">
       {editing ? (

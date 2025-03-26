@@ -3,11 +3,14 @@ import { FC } from "react";
 import { FaPhone } from "react-icons/fa";
 import { IoMdMail } from "react-icons/io";
 import { RiBankCardFill } from "react-icons/ri";
+import { userStore } from "store/userStore";
 
 const { Footer } = Layout;
 const { Text } = Typography;
 
 const FooterPrivate: FC = () => {
+  const { email, phone_number } = userStore();
+  const mailcode = email.split("@gmail")[0];
   return (
     <Footer className="footer-private">
       <div className="transfer-information">
@@ -17,10 +20,10 @@ const FooterPrivate: FC = () => {
           nội dung chuyển khoản theo mẫu sau
         </p>
         <Text copyable className="value">
-          ntt G5777 abudory147
+          {mailcode} G{phone_number.slice(-3)}
         </Text>
-        Trong đó G5777 là mã khách của quý khách, abudory147 là phần đầu email
-        của quý khách
+        Trong đó G{phone_number.slice(-3)} là mã khách của quý khách, {mailcode}{" "}
+        là phần đầu email của quý khách
       </div>
 
       <div className="footer-item">

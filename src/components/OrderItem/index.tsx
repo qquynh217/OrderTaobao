@@ -10,6 +10,7 @@ import {
   Tag,
   Tooltip,
 } from "antd";
+import modal from "antd/es/modal";
 import EditableParagraph from "components/EditableParagraph";
 import ImageOrder from "components/ImageOrder";
 import showMessage from "components/Message";
@@ -24,11 +25,19 @@ import { formatDate, getOrderStatus, getShippingType } from "utils";
 
 const MAX_PRODUCT_ROW = 5;
 
-const OrderItem: FC<{ item: IOrder; status: number }> = ({ item, status }) => {
+const OrderItem: FC<{ item: IOrder; status: number; handleDeposit?: any }> = ({
+  item,
+  status,
+  handleDeposit,
+}) => {
   const { storage: user_storage } = userStore();
   const [isWoodPackage, setIsWoodPackage] = useState(
     item.is_wood_package || false
   );
+  const minDeposit: number =
+    item.custom_percent_paid && +item.custom_percent_paid < 70
+      ? +item.custom_percent_paid
+      : 70;
   const column: TableProps<IOrderProduct>["columns"] = [
     {
       title: "Link",
@@ -106,9 +115,41 @@ const OrderItem: FC<{ item: IOrder; status: number }> = ({ item, status }) => {
       showMessage("error", "Yêu cầu đóng gỗ không thành công.");
     }
   };
+  const confirm = (percent: number) => {
+    const value = Math.round((percent * item.item_total_cost) / 100);
+
+    modal.confirm({
+      title: "Xác nhận đặt cọc",
+      content: (
+        <div className="subtitle">
+          <p>Xác nhận đặt cọc {percent}% tổng giá trị đơn</p>
+          <p>
+            Số dư của bạn sẽ bị trừ:{" "}
+            <b>
+              <NumberFormat value={value} suffix="đ" />{" "}
+            </b>
+          </p>
+        </div>
+      ),
+
+      okText: "Đặt cọc",
+      cancelText: "Hủy",
+      closable: true,
+      icon: null,
+      className: "modal-delete",
+      width: 480,
+      maskClosable: true,
+      okButtonProps: {
+        danger: true,
+        type: "default",
+      },
+      onOk: handleDeposit(percent, item),
+    });
+  };
+
   return (
     <div className="order-item">
-      {status == 2 && <Checkbox>Chọn</Checkbox>}
+      {/* {status == 2 && <Checkbox>Chọn</Checkbox>} */}
       <div className="order-header">
         <Row gutter={24}>
           <Col span={10}>
@@ -161,7 +202,7 @@ const OrderItem: FC<{ item: IOrder; status: number }> = ({ item, status }) => {
           <Row gutter={24}>
             <Col span={8}>
               {[
-                { label: "Số kiện hàng", value: item.number_package || 0 },
+                { label: "Số kiện hàng", value: item.packages.length || 0 },
                 {
                   label: "% phí mua hàng",
                   value: item.order_fee_percent
@@ -321,12 +362,12 @@ const OrderItem: FC<{ item: IOrder; status: number }> = ({ item, status }) => {
                   {
                     label: (
                       <span>
-                        Đặt cọc tối thiểu tiền hàng <b>(70%)</b>
+                        Đặt cọc tối thiểu tiền hàng <b>({minDeposit}%)</b>
                       </span>
                     ),
                     value: (
                       <NumberFormat
-                        value={item.item_total_cost * 0.7}
+                        value={(item.item_total_cost * minDeposit) / 100}
                         decimalScale={0}
                         suffix="đ"
                       />
@@ -354,10 +395,37 @@ const OrderItem: FC<{ item: IOrder; status: number }> = ({ item, status }) => {
                 ))}
                 <Divider />
                 <div className="button-field">
-                  <Space>
-                    <Button type="primary">Đặt cọc 70%</Button>
-                    <Button type="primary">Đặt cọc 80%</Button>
-                  </Space>
+                  <div className="d-flex-column d-flex-center gap10">
+                    <Space>
+                      <Button
+                        type="primary"
+                        onClick={() => {
+                          confirm(70);
+                        }}
+                      >
+                        Đặt cọc 70%
+                      </Button>
+                      <Button
+                        type="primary"
+                        onClick={() => {
+                          confirm(80);
+                        }}
+                      >
+                        Đặt cọc 80%
+                      </Button>
+                    </Space>
+                    {item.custom_percent_paid && (
+                      <Button
+                        type="primary"
+                        onClick={() => {
+                          if (item.custom_percent_paid)
+                            confirm(+item.custom_percent_paid);
+                        }}
+                      >
+                        Đặt cọc {item.custom_percent_paid}%
+                      </Button>
+                    )}
+                  </div>
                   <Button danger>Hủy đơn</Button>
                 </div>
               </Col>
@@ -368,4 +436,5 @@ const OrderItem: FC<{ item: IOrder; status: number }> = ({ item, status }) => {
     </div>
   );
 };
+
 export default OrderItem;

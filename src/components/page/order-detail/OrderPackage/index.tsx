@@ -1,24 +1,45 @@
-import { Table, Tooltip } from "antd";
+import { Button, Popconfirm, Space, Table, Tooltip } from "antd";
 import NumberFormat from "components/NumberFormat";
-import { DATE_FORMAT } from "constants";
+import { DATE_FORMAT, USER_ROLE } from "constants";
+import { IPackage } from "constants/interface";
 import { useOrderContext } from "context/OrderContext";
-import { FC } from "react";
+import { FC, useState } from "react";
+import { AiFillDelete } from "react-icons/ai";
 import { FaCircleExclamation } from "react-icons/fa6";
-import { formatDate } from "utils";
+import { RiEdit2Fill } from "react-icons/ri";
+import { userStore } from "store/userStore";
+import { formatDate, getOrderStatus } from "utils";
+import PackageModal from "./PackageModal";
 
 const OrderPackage: FC = () => {
-  const { order } = useOrderContext();
+  const { order, handleUpdateOrder } = useOrderContext();
+  const { role } = userStore();
+
+  const [isOpenModal, setIsOpenModal] = useState<{
+    action: string;
+    index: number | null;
+  }>({ action: "", index: null });
+
+  const handleRemovePackage = async (index: number) => {
+    const newProducts = [
+      ...order.packages.slice(0, index),
+      ...order.packages.slice(index + 1),
+    ];
+    await handleUpdateOrder(newProducts, "packages");
+  };
+
   const packageCol = [
     {
       title: "KIỆN HÀNG",
-      dataIndex: "status",
-      key: "status",
-      render: () => order.status,
+      dataIndex: "id",
+      key: "id",
+      render: (val: any) => (val ? val : getOrderStatus(order.status).value),
     },
     {
       title: "CÂN NẶNG",
       dataIndex: "weight",
       key: "weight",
+      width: 150,
       render: (val: string, rec: any) => (
         <>
           <p className="d-flex-center gap5">
@@ -38,15 +59,53 @@ const OrderPackage: FC = () => {
     },
     {
       title: "ĐƠN GIÁ",
+      width: 180,
       dataIndex: "weight_rate",
       key: "weight_rate",
-      render: (val: number) => <NumberFormat value={val} suffix="đ" />,
+      render: (val: number, rec: IPackage) => (
+        <>
+          <p className="d-flex-center gap5">
+            <NumberFormat value={val} suffix="kg" />
+            <Tooltip title="Đơn giá theo cân nặng">
+              <FaCircleExclamation />
+            </Tooltip>
+          </p>
+          <p className="d-flex-center gap5">
+            <NumberFormat value={rec.weight_base_volumn_rate} suffix="kg" />
+            <Tooltip title="Đơn giá theo cân nặng quy đổi từ thể tích">
+              <FaCircleExclamation />
+            </Tooltip>
+          </p>
+        </>
+      ),
     },
     {
       title: "THÀNH TIỀN",
-      dataIndex: "total_weight_price",
-      key: "total_weight_price",
-      render: (val: number) => <NumberFormat value={val} suffix="đ" />,
+      dataIndex: "weight_rate",
+      key: "weight_rate",
+      width: 180,
+      render: (val: number, rec: IPackage) => (
+        <>
+          <b className="d-flex-center gap5">
+            <NumberFormat value={val * (rec.weight || 0)} suffix="đ" />
+            <Tooltip title="Tiền cân nặng">
+              <FaCircleExclamation />
+            </Tooltip>
+          </b>
+          <b className="d-flex-center gap5">
+            <NumberFormat
+              value={
+                (rec.weight_base_volumn_rate || 0) *
+                (rec.weight_base_volumn || 0)
+              }
+              suffix="đ"
+            />
+            <Tooltip title="Tiền cân theo thể tích">
+              <FaCircleExclamation />
+            </Tooltip>
+          </b>
+        </>
+      ),
     },
     // {
     //   title: "CƯỚC THÊM",
@@ -73,7 +132,7 @@ const OrderPackage: FC = () => {
       title: "NGÀY",
       dataIndex: "ship_at",
       key: "ship_at",
-      width: "230px",
+
       render: (val: string, rec: any) => (
         <>
           {[
@@ -90,14 +149,71 @@ const OrderPackage: FC = () => {
         </>
       ),
     },
-  ];
+    {
+      title: "#",
+      dataIndex: "id",
+      key: "id",
+      width: 150,
+      render: (_val: any, _rec: any, index: number) => (
+        <Space>
+          <Button
+            onClick={() => {
+              setIsOpenModal({
+                action: "edit",
+                index,
+              });
+            }}
+          >
+            <RiEdit2Fill />
+          </Button>
+          <Popconfirm
+            title="Xóa sản phẩm"
+            description="Bạn có chắc chắn xóa sản phẩm này không?"
+            onConfirm={() => {
+              handleRemovePackage(index);
+            }}
+            okText="Có"
+            cancelText="Không"
+          >
+            <Button danger>
+              <AiFillDelete />
+            </Button>
+          </Popconfirm>
+        </Space>
+      ),
+    },
+  ].filter(
+    (item) =>
+      role == USER_ROLE.ADMIN || (role == USER_ROLE.USER && item.title != "#")
+  );
   return (
     <div className="order-package">
-      <h2>Kiện hàng</h2>
+      <div className="d-flex-center justify-between">
+        <h2>Kiện hàng</h2>
+        {role == USER_ROLE.ADMIN && (
+          <Button
+            type="primary"
+            className="small"
+            onClick={() => {
+              setIsOpenModal({
+                action: "create",
+                index: null,
+              });
+            }}
+          >
+            + Thêm
+          </Button>
+        )}
+      </div>
       <Table
         columns={packageCol}
         dataSource={order.packages}
         pagination={false}
+      />
+      <PackageModal
+        isOpen={isOpenModal}
+        setIsOpen={setIsOpenModal}
+        packages={order.packages}
       />
     </div>
   );

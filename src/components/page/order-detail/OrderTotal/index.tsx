@@ -13,7 +13,6 @@ const OrderTotal: FC = () => {
     {
       label: "(1) Tiền hàng",
       value: order.item_total_cost || 0,
-      key: "item_total_cost",
     },
     {
       label: "(2) Phí trả thêm (nếu có)",
@@ -36,15 +35,14 @@ const OrderTotal: FC = () => {
     },
   ];
   const weightFees = [
-    { label: "Tiền cân thực", value: order.weight_fee || 0, key: "weight_fee" },
+    { label: "Tiền cân thực", value: order.weight_fee || 0 },
     {
       label: "Tiền cân quy đổi",
-      value: order.volumn_fee || 0,
-      key: "volumn_fee",
+      value: order.weight_base_volumn || 0,
     },
     {
       label: "(7) Tiền cân tính",
-      value: Math.max(order.weight_fee || 0, order.volumn_fee || 0),
+      value: order.total_weight_fee,
     },
     {
       label: "(8) Đóng gỗ",

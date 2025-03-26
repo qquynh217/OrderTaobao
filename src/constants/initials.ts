@@ -1,4 +1,4 @@
-import { IOrder, IOrderProduct, IUser } from "./interface";
+import { IOrder, IOrderProduct, IPackage, IUser } from "./interface";
 
 export const initUser: IUser = {
   id: 0,
@@ -26,7 +26,20 @@ export const initProductOrder: IOrderProduct = {
   note: "",
   link_product_image: "",
   number_order: 0,
-  staff_note: "",
+  note_staff: "",
+};
+
+export const initPackage: IPackage = {
+  code: "",
+  weight: 0,
+  weight_rate: 0,
+  total_weight_price: 0,
+  ship_at: "",
+  transit_at_vn: "",
+  stock_at_vn: "",
+  return_at: "",
+  weight_base_volumn: 0,
+  status: "",
 };
 
 export const initOrder: IOrder = {

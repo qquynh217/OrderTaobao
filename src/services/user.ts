@@ -29,6 +29,23 @@ class UserService {
     const paramStr = objectToSearchParams(params);
     return axiosInstance.get(`/user?${paramStr}`);
   }
+  get(userId: string) {
+    return axiosInstance.get(`/user/${userId}`);
+  }
+  update(params: {
+    userId: string;
+    name?: string;
+    phone_number?: string;
+    storage?: string;
+    address_detail?: string;
+    balance?: number;
+  }) {
+    const { userId, ...data } = params;
+    return axiosInstance.put(`/user/${userId}`, data);
+  }
+  delete(userId: string) {
+    return axiosInstance.delete(`/user/${userId}`);
+  }
 }
 
 export const userService = new UserService();

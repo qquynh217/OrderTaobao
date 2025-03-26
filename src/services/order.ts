@@ -15,7 +15,6 @@ type SearchType = {
 class OrderService {
   get(params: SearchType) {
     const paramStr = objectToSearchParams(params);
-    console.log(paramStr);
 
     return axiosInstance.get(`/order?${paramStr}`);
   }
@@ -33,6 +32,11 @@ class OrderService {
   }
   update(params: { orderId: string; data: any }) {
     return axiosInstance.put(`/order/${params.orderId}`, params.data);
+  }
+  paid(params: { amount: number; orderId: string }) {
+    return axiosInstance.put(`/order/${params.orderId}/paid`, {
+      amount: params.amount,
+    });
   }
 }
 

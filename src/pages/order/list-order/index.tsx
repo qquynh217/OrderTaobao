@@ -10,6 +10,7 @@ import {
   Row,
   Space,
 } from "antd";
+import showMessage from "components/Message";
 import OrderItem from "components/OrderItem";
 import { ORDER_STATUS, PAGE_SIZE_OPTIONS, SORT_DIRECTIONS } from "constants";
 import { IOrder } from "constants/interface";
@@ -17,11 +18,13 @@ import dayjs from "dayjs";
 import { FC, useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { orderService } from "services/order";
+import { userStore } from "store/userStore";
 
 const { RangePicker } = DatePicker;
 
 const ListOrder: FC = () => {
   const { status } = useParams();
+  const { balance, setBalance } = userStore();
   const [orders, setOrders] = useState<{ list: Array<IOrder>; total: 0 }>({
     list: [],
     total: 0,
@@ -82,6 +85,32 @@ const ListOrder: FC = () => {
       page: page,
     });
   };
+  const handleDeposit =
+    (percent: number, item: IOrder) => async (close: any) => {
+      try {
+        const amount = Math.round((percent * item.item_total_cost) / 100);
+        const res = await orderService.paid({
+          amount,
+          orderId: item.id,
+        });
+        if (res.status == 200) {
+          const newBalance = balance - amount;
+          setBalance(newBalance);
+          showMessage("success", "Đặt cọc đơn thành công!");
+          fetchOrders({ ...queryParams, status });
+        } else {
+          showMessage("error", "Đặt cọc đơn không thành công!");
+        }
+
+        close();
+      } catch (error: any) {
+        const status = error.status;
+        const msg =
+          status == 405 ? "Số dư không đủ" : "Đặt cọc đơn không thành công.";
+        showMessage("error", msg);
+        close();
+      }
+    };
   useEffect(() => {
     fetchOrders({
       ...queryParams,
@@ -141,7 +170,12 @@ const ListOrder: FC = () => {
         ) : (
           <div className="list-order_wrapper list-order-deposit">
             {orders.list.map((order) => (
-              <OrderItem item={order} status={+(status || 0)} key={order.id} />
+              <OrderItem
+                item={order}
+                status={+(status || 0)}
+                key={order.id}
+                handleDeposit={handleDeposit}
+              />
             ))}
           </div>
         )

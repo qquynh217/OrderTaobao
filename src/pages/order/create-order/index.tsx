@@ -17,10 +17,11 @@ import { FaPlus, FaX } from "react-icons/fa6";
 import noPhoto from "resources/images/no-photo.png";
 import { orderService } from "services/order";
 import { configStore } from "store/configStore";
+import { userStore } from "store/userStore";
 const tableCol = [
   { key: "image", name: "Ảnh", span: 2 },
   {
-    key: "link",
+    key: "link_product",
     name: "Link sản phẩm",
     span: 5,
     label: "Nhập link sản phẩm",
@@ -74,17 +75,18 @@ const CreateOrder: FC = () => {
   const [form] = Form.useForm();
   const [isLoading, setIsLoading] = useState(false);
   const { exchange_rate } = configStore();
+  const { storage } = userStore();
   // const image = Form.useWatch("image", form);
   const onSubmit = async (value: any) => {
     setIsLoading(true);
     let data = {
       image: value.image || "",
       type_delivery: value.shippingType,
-      status: 1,
+      user_storage: storage,
       item_total_cost: 0,
       products: [
         {
-          link_product: value.link,
+          link_product: value.link_product,
           color: value.color || "",
           size: value.size || "",
           number: value.number,
@@ -98,7 +100,6 @@ const CreateOrder: FC = () => {
       (res, item) => res + item.price * item.number * exchange_rate,
       0
     );
-    console.log(data);
 
     const formData = new FormData();
     formData.append("image", data.image);
@@ -106,9 +107,10 @@ const CreateOrder: FC = () => {
 
     try {
       const res = await orderService.create(formData);
-      console.log(res);
-      form.resetFields();
-      showMessage("success", "Tạo đơn hàng thành công.");
+      if (res.status == 200) {
+        form.resetFields();
+        showMessage("success", "Tạo đơn hàng thành công.");
+      }
     } catch (error) {
       console.log(error);
       showMessage("error", "Tạo đơn hàng không thành công.");
