@@ -4,7 +4,7 @@ const API_URL = import.meta.env.VITE_API_PROVINCE;
 
 class Provinces {
   searchProvice = async () => {
-    const res = await fetch("/src/resources/provinces.json");
+    const res = await fetch("provinces.json");
     const data = await res.json();
     const province = data.data.sort((a: any, b: any) => {
       if (a.id == "01" && b.id != "01") return -1;
