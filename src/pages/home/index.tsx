@@ -65,7 +65,7 @@ const HomePage: FC = () => {
           đầu Trung Quốc.
         </h2>
         <h2>Cam kết mức giá tốt nhất cho bạn Bạn cần nhập hàng!</h2>
-        <h2>Hãy đến với Orderthangloi.com!</h2>
+        <h2>Hãy đến với nhattinorder.com!</h2>
       </div>
       <div className="home-page_inner">
         <div className="order-step">

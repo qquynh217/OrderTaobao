@@ -23,7 +23,7 @@ const Footer: FC = () => {
             </p>
             <div className="contact">
               <IoMdMail fontSize={18} />
-              <p>cskh.orderthangloi@gmail.com</p>
+              <p>cskh.nhattinorder@gmail.com</p>
             </div>
           </Col>
           <Col span={2} />

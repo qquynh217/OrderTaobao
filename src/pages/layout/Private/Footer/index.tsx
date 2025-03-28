@@ -55,7 +55,7 @@ const FooterPrivate: FC = () => {
             <IoMdMail />
             <p>Email</p>
           </Space>
-          <b>cskh.orderthangloi@gmail.com</b>
+          <b>cskh.nhattinorder@gmail.com</b>
         </div>
       </div>
     </Footer>
