@@ -1,5 +1,5 @@
 import { USER_ROLE } from "constants";
-import { IOrder, ITransaction, IUser } from "./interface";
+import { IConsignment, IOrder, ITransaction, IUser } from "./interface";
 
 export const user: IUser = {
   id: "1",
@@ -92,5 +92,34 @@ export const transHistory: ITransaction[] = [
     created_time: 1738861738027,
     description: "075720.200523.112822.ntt g5777",
     type: "deposit",
+  },
+];
+
+export const consignmentData: IConsignment[] = [
+  {
+    id: "1",
+    code: "KG17624",
+    productName: "ô",
+    orderType: "Đơn thường",
+    orderDate: "07-05-2025 11:52:05",
+    weight: 0.5,
+    volume: 0.5,
+    totalAmount: 10000,
+    paid: 10000,
+    paymentStatus: "Đã thanh toán",
+    status: "warehouse_inbound_vn",
+  },
+  {
+    id: "2",
+    code: "KG17284",
+    productName: "quang anh",
+    orderType: "Đơn thường",
+    orderDate: "04-05-2025 13:48:04",
+    weight: 0.5,
+    volume: 0.5,
+    totalAmount: 10000,
+    paid: 10000,
+    paymentStatus: "Đã thanh toán",
+    status: "cancelled",
   },
 ];

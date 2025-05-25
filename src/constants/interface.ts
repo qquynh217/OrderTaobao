@@ -1,5 +1,5 @@
 export interface IUser {
-  id?: number | string;
+  id?: string;
   email: string;
   name: string;
   phone_number: string;
@@ -104,4 +104,24 @@ export interface ITransaction {
   description: string;
   amount: number;
   balance: number;
+}
+
+export interface IConsignment {
+  id: string;
+  code: string;
+  transactionCode?: string;
+  numberPackage?: number;
+  productName?: string;
+  productAmount?: number;
+  orderType: string;
+  orderDate: string;
+  weight: number;
+  volume?: number;
+  paid: number;
+  paymentStatus: string;
+  totalAmount: number;
+  status: string;
+  isWoodPackage?: boolean;
+  isItemInspected?: boolean;
+  insurance?: string;
 }

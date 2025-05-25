@@ -1,0 +1,82 @@
+.consignment-container {
+  //   padding: 24px;
+  //   background-color: #f5f7fa;
+  h2.title {
+    border-bottom: 1px solid #d8d8d8;
+  }
+  .consignment-card {
+    .summary-box {
+      margin-bottom: 16px;
+      padding: 16px;
+      background: #fff;
+      border: 1px solid #f0f0f0;
+      border-radius: 4px;
+      display: grid;
+      gap: 8px;
+      font-size: 14px;
+
+      p {
+        margin: 0;
+      }
+    }
+
+    .ant-table-wrapper {
+      .ant-table {
+        border: 1px solid #f0f0f0;
+      }
+
+      .ant-table-thead > tr > th {
+        background: #f0f2f5;
+        font-weight: 600;
+      }
+
+      .ant-table-tbody > tr > td {
+        vertical-align: middle;
+      }
+    }
+
+    .search-box {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 10%;
+      margin-bottom: 16px;
+      .ant-input-search {
+        margin: 0;
+        width: 50%;
+      }
+      button.create-button {
+        padding: 4px 24px;
+        width: 20%;
+      }
+    }
+  }
+
+  .summary-box {
+    h3 {
+      text-transform: uppercase;
+      font-size: 14px;
+    }
+    .summary-item {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      color: #2574ab;
+
+      b,
+      p {
+        width: 300px;
+        font-weight: 600;
+        text-transform: uppercase;
+      }
+    }
+    .total-revenue {
+      .summary-item {
+        line-height: 2.2;
+        & + .summary-item {
+          border-top: 1px dashed #d8d8d8;
+        }
+      }
+    }
+  }
+}

@@ -19,6 +19,8 @@ function App() {
       const userData = JSON.parse(user_storage).state;
       if (userData.token) {
         const user = getUserByJwtoken(userData.token);
+        console.log(user);
+
         if (user.exp && user.exp > Date.now() / 1000) {
           handleUserLogin(user);
         } else {

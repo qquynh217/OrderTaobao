@@ -1,0 +1,23 @@
+.consignment-create {
+  .title {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+  }
+  .ant-breadcrumb-link {
+    font-weight: 600;
+  }
+  &_wrapper {
+    margin-top: 20px;
+    background-color: $color_white;
+    padding: 2rem;
+    min-height: calc(100vh - $header-height - 300px);
+    h3.sub-title {
+      font-weight: 600;
+      margin-bottom: 16px;
+    }
+    .ant-input-number-affix-wrapper {
+      width: 100%;
+    }
+  }
+}

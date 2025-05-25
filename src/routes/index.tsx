@@ -1,4 +1,6 @@
 import { ORDER_STATUS, USER_ROLE } from "constants";
+import Consignment from "pages/consignment";
+import ConsignmentCreate from "pages/consignment/create";
 import HomePage from "pages/home";
 import PriveLayout from "pages/layout/Private";
 import PublicLayout from "pages/layout/Public";
@@ -6,9 +8,11 @@ import OrderAdmin from "pages/order-admin";
 import CreateOrder from "pages/order/create-order";
 import OrderDetail from "pages/order/detail";
 import ListOrder from "pages/order/list-order";
+import Profile from "pages/profile";
 import SignUp from "pages/signup";
 import Transaction from "pages/transaction";
 import UserAdmin from "pages/user-admin";
+import { FaBox } from "react-icons/fa";
 import { FaBoxArchive, FaGlobe, FaUserGroup, FaWallet } from "react-icons/fa6";
 import { Navigate, createBrowserRouter } from "react-router-dom";
 
@@ -22,10 +26,13 @@ export const ROUTE_URL = {
   SIGNUP: "/dang-ky",
   LOGIN: "/dang-nhap",
   ORDER_ALL: "/don-hang/tat-ca",
-  PROFILE: "/thong-tin-ca-nhan",
+  PROFILE: "/don-hang/thong-tin-ca-nhan",
   ORDER_CREATE: "/don-hang/tao-don",
   ORDER_DETAIL: "/don-hang/chi-tiet",
   TRANSACTION: "/don-hang/giao-dich",
+  CONSIGNMENT: "/don-hang/ky-gui",
+  CONSIGNMENT_CREATE: "/don-hang/ky-gui/tao-ky-gui",
+
   ADMIN: "/quan-ly",
   ORDER_ADMIN: "/quan-ly/don-hang",
   USER_ADMIN: "/quan-ly/khach-hang",
@@ -73,6 +80,18 @@ const routes = [
       {
         path: ROUTE_URL.TRANSACTION,
         element: <Transaction />,
+      },
+      {
+        path: ROUTE_URL.PROFILE,
+        element: <Profile />,
+      },
+      {
+        path: ROUTE_URL.CONSIGNMENT,
+        element: <Consignment />,
+      },
+      {
+        path: ROUTE_URL.CONSIGNMENT_CREATE,
+        element: <ConsignmentCreate />,
       },
     ],
   },
@@ -127,6 +146,12 @@ export const sidebarItems = [
         role: [USER_ROLE["USER"]],
       })),
     ],
+  },
+  {
+    key: ROUTE_URL.CONSIGNMENT,
+    icon: <FaBox />,
+    label: "Ký gửi",
+    role: [USER_ROLE["USER"]],
   },
   // {
   //   key: ROUTE_URL.CART,

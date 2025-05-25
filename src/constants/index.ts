@@ -129,3 +129,60 @@ export const ORDER_FIELD_NAME: { [key: string]: string } = {
   ship_cn_fee: "phí ship nội địa TQ",
   tally_fee: "phí kiểm đếm",
 };
+
+export const CONSIGNMENT_STATUS = [
+  {
+    value: "total",
+    label: "Tất cả",
+  },
+  {
+    value: "shop_dispatching",
+    label: "Shop phát hàng",
+    color: "pink",
+  },
+  {
+    value: "warehouse_inbound_cn",
+    label: "Nhập kho TQ",
+    color: "cyan",
+  },
+  {
+    value: "shipping_to_vn",
+    label: "Chuyển về VN",
+    color: "purple",
+  },
+  {
+    value: "warehouse_inbound_vn",
+    label: "Nhập kho VN",
+    color: "orange",
+  },
+  {
+    value: "dispatched",
+    label: "Đã xuất kho",
+    color: "blue",
+  },
+  {
+    value: "cancelled",
+    label: "Đơn hàng hủy",
+    color: "red",
+  },
+  {
+    value: "completed",
+    label: "Hoàn thành",
+    color: "green",
+  },
+];
+
+export const INSURANCE_TYPE = [
+  {
+    value: 0,
+    label: "Không sử dụng",
+  },
+  {
+    value: 2,
+    label: "5% hàng giá trị cao",
+  },
+  {
+    value: 3,
+    label: "3% hàng phổ thông mất đền 100%",
+  },
+];

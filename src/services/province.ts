@@ -3,6 +3,12 @@ import axios from "axios";
 const API_URL = import.meta.env.VITE_API_PROVINCE;
 
 class Provinces {
+  getProvince = async (id: string) => {
+    const res = await fetch("provinces.json");
+    const data = await res.json();
+    return data.data.find((item: any) => item.id == id);
+  };
+
   searchProvice = async () => {
     const res = await fetch("provinces.json");
     const data = await res.json();
@@ -32,7 +38,12 @@ class Provinces {
       return [];
     }
   };
-  getLocationText = async (params: { province: string; district: string }) => {
+  getLocationText = async (params: {
+    province: string;
+    district: string;
+    field?: string;
+  }) => {
+    const field = params.field || "full_name";
     const { province, district } = params;
     let id = province;
     if (district != "0") {
@@ -41,7 +52,7 @@ class Provinces {
 
     let res = await axios.get(API_URL + `/5/${id}.htm`);
 
-    let location = res.data.data.full_name;
+    let location = res.data.data[field];
     return location;
   };
 }
