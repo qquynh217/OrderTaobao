@@ -1,5 +1,5 @@
 import { USER_ROLE } from "constants";
-import { IConsignment, IOrder, ITransaction, IUser } from "./interface";
+import { IConsignment, IConsignmentTable, IConsignmentTransaction, IOrder, ITransaction, IUser } from "./interface";
 
 export const user: IUser = {
   id: "1",
@@ -95,16 +95,16 @@ export const transHistory: ITransaction[] = [
   },
 ];
 
-export const consignmentData: IConsignment[] = [
+export const consignmentData: IConsignmentTable[] = [
   {
     id: "1",
     code: "KG17624",
     productName: "ô",
     orderType: "Đơn thường",
-    orderDate: "07-05-2025 11:52:05",
-    weight: 0.5,
-    volume: 0.5,
-    totalAmount: 10000,
+    createdAt: "07-05-2025 11:52:05",
+    totalWeight: 0.5,
+    totalVolume: 0.5,
+    totalPrice: 10000,
     paid: 10000,
     paymentStatus: "Đã thanh toán",
     status: "warehouse_inbound_vn",
@@ -114,12 +114,82 @@ export const consignmentData: IConsignment[] = [
     code: "KG17284",
     productName: "quang anh",
     orderType: "Đơn thường",
-    orderDate: "04-05-2025 13:48:04",
-    weight: 0.5,
-    volume: 0.5,
-    totalAmount: 10000,
+    createdAt: "04-05-2025 13:48:04",
+    totalWeight: 0.5,
+    totalVolume: 0.5,
+    totalPrice: 10000,
     paid: 10000,
     paymentStatus: "Đã thanh toán",
     status: "cancelled",
   },
 ];
+export const consignment: IConsignment = {
+  id: 'consignment-001',
+  code: 'CGN-20250605-001',
+  userId: 'user-12345',
+  status: 'shop_dispatching',
+  isWoodPackage: true,
+  isItemInspected: true,
+  insurance: 0,
+  woodPackageFee: 150000,
+  itemInspectedFee: 50000,
+  insuranceFee: 0,
+  extraFee: 0,
+  discount: 0,
+  paid: 739000,
+  paymentStatus: 'Đã thanh toán',
+  totalWeight: 25.5,
+  totalVolume: 0.12,
+  feeShipCN: 80000,
+  shipType: 0, // VD: 1 = nhanh, 2 = thường
+  weightPrice: 459000,
+  totalPrice: 739000,
+  receiverInfo: {
+    name: 'Nguyễn Văn A',
+    phone: '0987654321',
+    address: '123 Đường ABC, Quận 1, TP.HCM'
+  },
+  VNStorage: 'Hà Nội',
+  createdAt: '2025-06-05T09:30:00Z',
+}
+
+export const consignmentTransactions: IConsignmentTransaction = [
+  {
+    id: 'txn-001',
+    transactionCode: 'TXN-20250605-001',
+    consignmentCode: 'CGN-20250605-001',
+    userId: 'user-12345',
+    productName: 'Áo thun nam',
+    productValue: 200000,
+    productAmount: 3,
+    weight: 1.5,
+    weightByVolume: 2,
+    width: 30,
+    length: 40,
+    height: 10,
+    price: 10000,
+    totalPrice: 30000,
+    createdAt: '2025-06-05T09:00:00Z',
+    updatedAt: '2025-06-05T09:10:00Z',
+    status: 'packed'
+  },
+  {
+    id: 'txn-002',
+    transactionCode: 'TXN-20250605-002',
+    consignmentCode: 'CGN-20250605-001',
+    userId: 'user-12345',
+    productName: 'Giày thể thao',
+    productValue: 1500000,
+    productAmount: 1,
+    weight: 2,
+    weightByVolume: 2.5,
+    width: 35,
+    length: 30,
+    height: 15,
+    price: 20000,
+    totalPrice: 20000,
+    createdAt: '2025-06-05T09:15:00Z',
+    updatedAt: '2025-06-05T09:20:00Z',
+    status: 'packed'
+  }
+]

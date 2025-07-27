@@ -1,0 +1,242 @@
+// Variables
+$primary-color: #ff6a00;
+$secondary-color: #4CAF50;
+$danger-color: #f44336;
+$text-color: #333;
+$light-text-color: #666;
+$border-color: #e0e0e0;
+$background-color: #f4f4f4;
+$section-bg-color: #f9f9f9;
+$white: #fff;
+$table-header-bg: #fafafa; // AntD default table header color
+$tab-active-border: $primary-color; // Màu border dưới tab active
+$tab-inactive-text: #888; // Màu chữ tab inactive
+
+.config-page {
+  .title {
+    border-bottom: 1px solid #d8d8d8;
+  }
+
+  // AntD Tabs override (if needed, mostly default is fine)
+  .ant-tabs-nav {
+    margin-bottom: 20px;
+
+    .ant-tabs-nav-wrap {
+      justify-content: center; // Canh giữa các tab nếu muốn
+    }
+
+    .ant-tabs-tab {
+      padding: 12px 20px;
+      font-size: 1.1em;
+      font-weight: bold;
+      color: $tab-inactive-text;
+
+      &:hover {
+        color: $primary-color;
+      }
+
+      &.ant-tabs-tab-active .ant-tabs-tab-btn {
+        color: $primary-color;
+      }
+    }
+
+    .ant-tabs-ink-bar {
+      background: $primary-color;
+    }
+  }
+
+  .ant-card.config-section {
+    // Customizing AntD Card for sections
+    background-color: $section-bg-color;
+    border: 1px solid $border-color;
+    border-radius: 6px;
+    margin-bottom: 25px;
+
+    .ant-card-head {
+      border-bottom: 1px dashed $border-color;
+
+      .ant-card-head-title {
+        font-size: 1.2em;
+        font-weight: bold;
+        color: $text-color;
+      }
+    }
+
+    .ant-card-body {
+      padding-top: 10px; // Reduce top padding from default
+    }
+  }
+
+  // Custom styles for dynamic input groups (add/remove buttons)
+  .ant-input-group-custom {
+    .ant-form-item {
+      margin-bottom: 0 !important; // Remove default bottom margin from Form.Item in Space
+      flex: 1; // Make each form item take equal space
+      min-width: 120px; // Ensure min width
+
+      .ant-form-item-label {
+        // Style for AntD form labels
+        padding-bottom: 0 !important;
+
+        label {
+          height: auto !important; // Override AntD fixed label height if present
+          font-weight: normal;
+          color: $light-text-color;
+        }
+      }
+    }
+
+    .dynamic-delete-button {
+      margin-top: 28px; // Align icon with input
+      margin-left: 8px;
+      font-size: 16px;
+      cursor: pointer;
+      color: $danger-color;
+      transition: all 0.3s ease;
+
+      &:hover {
+        color: darken($danger-color, 10%);
+      }
+    }
+  }
+
+  // AntD Button styles (customization)
+  .ant-btn-primary {
+    background-color: $primary-color;
+    border-color: $primary-color;
+
+    &:hover,
+    &:focus {
+      background-color: darken($primary-color, 5%);
+      border-color: darken($primary-color, 5%);
+    }
+  }
+
+  .ant-btn-dashed {
+    border-color: $secondary-color;
+    color: $secondary-color;
+
+    &:hover,
+    &:focus {
+      color: darken($secondary-color, 10%);
+      border-color: darken($secondary-color, 10%);
+    }
+  }
+
+  // History Table specific styles
+  .history-tab {
+    .no-history-message {
+      text-align: center;
+      color: $light-text-color;
+      padding: 20px;
+      border: 1px dashed $border-color;
+      border-radius: 6px;
+    }
+
+    .history-table-container {
+      margin-top: 15px; // Space between Card and table
+
+      // AntD Table handles most of the styling, we just need minor adjustments
+      .ant-table-wrapper {
+        border: 1px solid $border-color; // Add outer border to table wrapper
+        border-radius: 6px; // Match card border-radius
+      }
+
+      .ant-table-thead>tr>th {
+        background-color: $table-header-bg;
+        color: $text-color;
+        font-weight: bold;
+        white-space: nowrap;
+      }
+
+      .ant-table-tbody>tr.ant-table-row:hover>td {
+        background: #f0f0f0;
+      }
+
+      .ant-table-tbody>tr:nth-child(even) {
+        background-color: #fefefe;
+      }
+
+      .history-details-content {
+        font-size: 0.9em;
+        line-height: 1.5;
+
+        p {
+          margin: 0 0 5px 0;
+        }
+
+        ul {
+          margin: 5px 0 5px 15px;
+          padding: 0;
+          list-style-type: circle;
+
+          li {
+            margin-bottom: 2px;
+          }
+        }
+      }
+    }
+
+    // AntD Pagination custom styles
+    .ant-pagination-custom {
+      margin-top: 20px;
+      text-align: center;
+
+      .ant-pagination-item-active {
+        background-color: $primary-color;
+        border-color: $primary-color;
+
+        a {
+          color: $white;
+        }
+      }
+
+      .ant-pagination-item-active:hover {
+        background-color: darken($primary-color, 5%);
+        border-color: darken($primary-color, 5%);
+
+        a {
+          color: $white;
+        }
+      }
+
+      .ant-pagination-prev .ant-pagination-item-link,
+      .ant-pagination-next .ant-pagination-item-link {
+        border-color: $border-color;
+        color: $text-color;
+
+        &:hover {
+          border-color: $primary-color;
+          color: $primary-color;
+        }
+      }
+    }
+  }
+
+  // Responsive adjustments
+  @media (max-width: 768px) {
+    .config-page {
+      padding: 15px;
+    }
+
+    .ant-input-group-custom {
+      flex-direction: column;
+      gap: 10px;
+
+      .ant-form-item {
+        flex-basis: 100%;
+        min-width: unset;
+      }
+
+      .dynamic-delete-button {
+        margin-top: 0;
+        align-self: flex-end;
+      }
+    }
+
+    .ant-tabs-tab {
+      font-size: 0.9em !important;
+      padding: 10px 15px !important;
+    }
+  }
+}

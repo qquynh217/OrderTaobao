@@ -35,7 +35,7 @@ function App() {
   };
   const getConfig = async () => {
     try {
-      const res = await configService.get();
+      const res = await configService.getLatest();
       const exchange_rate = res.data.data.result?.exchange_rate || 0;
       const weights = res.data.data.result?.weight || [];
       setExchangeRate(exchange_rate);

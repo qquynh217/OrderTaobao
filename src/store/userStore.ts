@@ -9,11 +9,12 @@ interface IUserAction {
   handleLogout: () => void;
   setToken: (token: string) => void;
   setBalance: (balance: number) => void;
+  setUser: (data: any) => void;
 }
 
 export const userStore = create<IUser & IUserAction>()(
   persist(
-    (set) => ({
+    (set, get) => ({
       ...initUser,
       handleUserLogin: (user: IUser) => {
         set({ ...user });
@@ -26,6 +27,9 @@ export const userStore = create<IUser & IUserAction>()(
       },
       setBalance(balance) {
         set({ balance: balance });
+      },
+      setUser: (data: any) => {
+        set({ ...get(), ...data });
       },
     }),
     {

@@ -130,59 +130,88 @@ export const ORDER_FIELD_NAME: { [key: string]: string } = {
   tally_fee: "phí kiểm đếm",
 };
 
-export const CONSIGNMENT_STATUS = [
-  {
-    value: "total",
-    label: "Tất cả",
-  },
-  {
-    value: "shop_dispatching",
-    label: "Shop phát hàng",
-    color: "pink",
-  },
-  {
-    value: "warehouse_inbound_cn",
-    label: "Nhập kho TQ",
-    color: "cyan",
-  },
-  {
-    value: "shipping_to_vn",
-    label: "Chuyển về VN",
-    color: "purple",
-  },
-  {
-    value: "warehouse_inbound_vn",
-    label: "Nhập kho VN",
-    color: "orange",
-  },
-  {
-    value: "dispatched",
-    label: "Đã xuất kho",
-    color: "blue",
-  },
-  {
-    value: "cancelled",
-    label: "Đơn hàng hủy",
-    color: "red",
-  },
-  {
-    value: "completed",
-    label: "Hoàn thành",
-    color: "green",
-  },
-];
+export const CONSIGNMENT = {
+  STATUS: [
+    {
+      value: "total",
+      label: "Tất cả",
+    },
+    {
+      value: "shop_dispatching",
+      label: "Shop phát hàng",
+      color: "pink",
+    },
+    {
+      value: "warehouse_inbound_cn",
+      label: "Nhập kho TQ",
+      color: "cyan",
+    },
+    {
+      value: "shipping_to_vn",
+      label: "Chuyển về VN",
+      color: "purple",
+    },
+    {
+      value: "warehouse_inbound_vn",
+      label: "Nhập kho VN",
+      color: "orange",
+    },
+    {
+      value: "dispatched",
+      label: "Đã xuất kho",
+      color: "blue",
+    },
+    {
+      value: "cancelled",
+      label: "Đơn hàng hủy",
+      color: "red",
+    },
+    {
+      value: "completed",
+      label: "Hoàn thành",
+      color: "green",
+    },
+  ],
+  INSURANCE_TYPE: [
+    {
+      value: 0,
+      label: "Không sử dụng",
+    },
+    {
+      value: 2,
+      label: "5% hàng giá trị cao",
+    },
+    {
+      value: 3,
+      label: "3% hàng phổ thông mất đền 100%",
+    },
+  ],
+  VN_STORAGE: [
+    {
+      value: "Hà Nội",
+      label: "Hà Nội",
+    },
+    {
+      value: "Hồ Chí Minh",
+      label: "Hồ Chí Minh",
+    },
+  ],
+  SHIP_TYPE: [
+    {
+      value: 0,
+      label: "Vận chuyển TMĐT",
+      // Chỉ tính cân thực đơn giá 18k/kg
+    },
+    {
+      value: 1,
+      label: "Vận chuyển hàng lô",
+      // Đơn giá 9k/kg, 1650k/m3 => bên nào nhiều tiền hơn tính bên đó
+    },
+    {
+      value: 2,
+      label: "Vận chuyển hàng xách tay",
+      // 35k/kg mặc định về kho Móng Cái
+    },
+  ]
+}
 
-export const INSURANCE_TYPE = [
-  {
-    value: 0,
-    label: "Không sử dụng",
-  },
-  {
-    value: 2,
-    label: "5% hàng giá trị cao",
-  },
-  {
-    value: 3,
-    label: "3% hàng phổ thông mất đền 100%",
-  },
-];

@@ -3,7 +3,10 @@ import { jwtDecode } from "jwt-decode";
 
 export const getUserByJwtoken = (token: string) => {
   const decoded: any = jwtDecode(token);
+  console.log(decoded);
+
   const user: IUser = {
+    id: decoded.sub || "",
     email: decoded.email || "",
     name: decoded.name || "",
     phone_number: decoded.phone_number || "",

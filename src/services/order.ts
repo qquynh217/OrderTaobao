@@ -1,7 +1,7 @@
 import axiosInstance from "services";
 import { objectToSearchParams } from "utils";
 
-type SearchType = {
+export type SearchType = {
   page?: number;
   size?: number;
   sort_by?: string;

@@ -1,19 +1,21 @@
 import { ORDER_STATUS, USER_ROLE } from "constants";
+import Config from "pages/admin/config";
+import OrderAdmin from "pages/admin/order-admin";
+import UserAdmin from "pages/admin/user-admin";
+import Cart from "pages/cart";
 import Consignment from "pages/consignment";
 import ConsignmentCreate from "pages/consignment/create";
+import ConsignmentDetail from "pages/consignment/detail";
 import HomePage from "pages/home";
 import PriveLayout from "pages/layout/Private";
 import PublicLayout from "pages/layout/Public";
-import OrderAdmin from "pages/order-admin";
 import CreateOrder from "pages/order/create-order";
 import OrderDetail from "pages/order/detail";
 import ListOrder from "pages/order/list-order";
 import Profile from "pages/profile";
 import SignUp from "pages/signup";
 import Transaction from "pages/transaction";
-import UserAdmin from "pages/user-admin";
-import { FaBox } from "react-icons/fa";
-import { FaBoxArchive, FaGlobe, FaUserGroup, FaWallet } from "react-icons/fa6";
+import { FaBoxArchive, FaCartShopping, FaGear, FaGlobe, FaUserGroup, FaWallet } from "react-icons/fa6";
 import { Navigate, createBrowserRouter } from "react-router-dom";
 
 export const ROUTE_URL = {
@@ -32,11 +34,13 @@ export const ROUTE_URL = {
   TRANSACTION: "/don-hang/giao-dich",
   CONSIGNMENT: "/don-hang/ky-gui",
   CONSIGNMENT_CREATE: "/don-hang/ky-gui/tao-ky-gui",
+  CONSIGNMENT_DETAIL: "/don-hang/ky-gui/:consignmentId",
 
   ADMIN: "/quan-ly",
   ORDER_ADMIN: "/quan-ly/don-hang",
   USER_ADMIN: "/quan-ly/khach-hang",
   ORDER_ADMIN_DETAIL: "/quan-ly/don-hang/:orderId",
+  CONFIG_ADMIN: "/quan-ly/chi-phi",
 };
 const routes = [
   {
@@ -93,6 +97,14 @@ const routes = [
         path: ROUTE_URL.CONSIGNMENT_CREATE,
         element: <ConsignmentCreate />,
       },
+      {
+        path: ROUTE_URL.CONSIGNMENT_DETAIL,
+        element: <ConsignmentDetail />,
+      },
+      {
+        path: ROUTE_URL.CART,
+        element: <Cart />,
+      },
     ],
   },
   {
@@ -110,6 +122,10 @@ const routes = [
       {
         path: ROUTE_URL.ORDER_ADMIN_DETAIL,
         element: <OrderDetail />,
+      },
+      {
+        path: ROUTE_URL.CONFIG_ADMIN,
+        element: <Config />,
       },
     ],
   },
@@ -147,18 +163,18 @@ export const sidebarItems = [
       })),
     ],
   },
-  {
-    key: ROUTE_URL.CONSIGNMENT,
-    icon: <FaBox />,
-    label: "Ký gửi",
-    role: [USER_ROLE["USER"]],
-  },
   // {
-  //   key: ROUTE_URL.CART,
-  //   icon: <FaCartShopping />,
-  //   label: "Giỏ hàng",
+  //   key: ROUTE_URL.CONSIGNMENT,
+  //   icon: <FaBox />,
+  //   label: "Ký gửi",
   //   role: [USER_ROLE["USER"]],
   // },
+  {
+    key: ROUTE_URL.CART,
+    icon: <FaCartShopping />,
+    label: "Giỏ hàng",
+    role: [USER_ROLE["USER"]],
+  },
   {
     key: ROUTE_URL.TRANSACTION,
     icon: <FaWallet />,
@@ -175,6 +191,12 @@ export const sidebarItems = [
     key: ROUTE_URL.USER_ADMIN,
     icon: <FaUserGroup />,
     label: "Quản lý khách hàng",
+    role: [USER_ROLE["ADMIN"]],
+  },
+  {
+    key: ROUTE_URL.CONFIG_ADMIN,
+    icon: <FaGear />,
+    label: "Quản lý chi phí",
     role: [USER_ROLE["ADMIN"]],
   },
 ];

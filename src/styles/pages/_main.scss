@@ -1,9 +1,10 @@
 @import "./layouts/main.scss";
+@import "./admin/main";
 @import "./home";
 @import "./signup";
 @import "./order/main";
 @import "./order-detail";
 @import "./transaction";
-@import "./order-admin";
 @import "./profile";
 @import "./consignment/main";
+@import "./cart";

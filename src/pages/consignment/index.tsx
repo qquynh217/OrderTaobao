@@ -1,8 +1,8 @@
 import { Button, Input, Tabs } from "antd";
 import ConsignmentTab from "components/ConsignmentTab";
-import { CONSIGNMENT_STATUS } from "constants";
-import { IConsignment } from "constants/interface";
+import { CONSIGNMENT } from "constants";
 import { consignmentData } from "constants/dumpData";
+import { IConsignmentTable } from "constants/interface";
 import { FC, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { ROUTE_URL } from "routes";
@@ -13,7 +13,7 @@ const { Search } = Input;
 const Consignment: FC = () => {
   const navigate = useNavigate();
   const [isLoading, setIsLoading] = useState(false);
-  const [data, setData] = useState<Array<IConsignment>>([]);
+  const [data, setData] = useState<Array<IConsignmentTable>>([]);
   const [tab, setTab] = useState("total");
   const [searchTerm, setSearchTerm] = useState("");
   const [total, setTotal] = useState<{
@@ -99,7 +99,7 @@ const Consignment: FC = () => {
           onChange={handleChangeTab}
           defaultValue={"total"}
         >
-          {CONSIGNMENT_STATUS.map((item) => (
+          {CONSIGNMENT.STATUS.map((item) => (
             <TabPane
               tab={`${item.label} (${total[item.value as keyof typeof total]})`}
               key={item.value}

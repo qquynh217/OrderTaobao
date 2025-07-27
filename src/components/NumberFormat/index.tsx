@@ -13,7 +13,8 @@ const NumberFormat = ({
 }) => {
   return !isNaN(parseFloat(value)) && isFinite(value) ? (
     <NumericFormat
-      thousandSeparator
+      thousandSeparator='.'
+      decimalSeparator=','
       displayType="text"
       decimalScale={decimalScale}
       value={value}

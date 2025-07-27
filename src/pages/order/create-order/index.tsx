@@ -18,7 +18,8 @@ import noPhoto from "resources/images/no-photo.png";
 import { orderService } from "services/order";
 import { configStore } from "store/configStore";
 import { userStore } from "store/userStore";
-const tableCol = [
+
+export const productCol = [
   { key: "image", name: "Ảnh", span: 2 },
   {
     key: "link_product",
@@ -128,7 +129,7 @@ const CreateOrder: FC = () => {
         nhất. Mời quý khách cài đặt tại
       </p>
       <Row className="table-header">
-        {tableCol.map((item) => (
+        {productCol.map((item) => (
           <Col span={item.span} key={item.key}>
             <p className="header-item">{item.name}</p>
           </Col>
@@ -141,7 +142,7 @@ const CreateOrder: FC = () => {
         onFinish={onSubmit}
       >
         <Row className="table-row">
-          {tableCol.map((item) => {
+          {productCol.map((item) => {
             let Comp = item.Comp || Input;
             return (
               <Col span={item.span} key={item.key}>
@@ -167,7 +168,7 @@ const CreateOrder: FC = () => {
             <>
               {fields.map(({ key, name, ...restField }) => (
                 <Row className="table-row" key={key}>
-                  {tableCol.map((item) => {
+                  {productCol.map((item) => {
                     let Comp = item.Comp || Input;
                     return (
                       <Col span={item.span} key={item.key}>

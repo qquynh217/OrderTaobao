@@ -25,6 +25,11 @@ export interface IProduct {
   note?: string;
   link_product_image?: string;
 }
+export interface IProductCart extends IProduct {
+  id: string;
+  name?: string;
+  isSelected: boolean;
+}
 export interface IPackage {
   code: number | string;
   weight?: number; // cân nặng
@@ -109,19 +114,87 @@ export interface ITransaction {
 export interface IConsignment {
   id: string;
   code: string;
-  transactionCode?: string;
-  numberPackage?: number;
-  productName?: string;
-  productAmount?: number;
-  orderType: string;
-  orderDate: string;
-  weight: number;
-  volume?: number;
-  paid: number;
-  paymentStatus: string;
-  totalAmount: number;
+  userId: string;
   status: string;
-  isWoodPackage?: boolean;
-  isItemInspected?: boolean;
-  insurance?: string;
+  isWoodPackage?: boolean;  // có đóng gỗ không
+  isItemInspected?: boolean; // có kiểm đếm không
+  insurance?: number; // bảo hiểm
+  woodPackageFee?: number; // phí đóng gỗ
+  itemInspectedFee?: number; // phí kiểm đếm
+  insuranceFee?: number; // phí bảo hiểm
+  extraFee?: number; // phụ thu
+  discount?: number; // chiết khấu
+  paid?: number; // số tiền đã trả
+  paymentStatus?: string; // trạng thái thanh toán
+  totalWeight?: number; // tổng kg
+  totalVolume?: number; // tổng m3
+  feeShipCN?: number; // phí ship CN
+  shipType?: number; // loại vận chuyển
+  weightPrice?: number; // đơn giá cước VCQT
+  totalPrice?: number; // tổng tiền
+  receiverInfo?: {
+    name?: string;
+    phone?: string;
+    address?: string;
+    email?: string;
+  }
+  VNStorage?: string; // kho nhận hàng VN
+  createdAt?: string; // ngày tạo
+  transactions?: Array<IConsignmentTransaction>
+}
+export interface IConsignmentTable {
+  id: string;
+  code: string; // mã ký gửi
+  numberPackage?: number; // số kiện
+  productName?: string; // tên sản phẩm
+  productAmount?: number; // số lượng
+  orderType: string; // loại đơn
+  totalWeight: number; // tổng kg
+  totalVolume?: number; // tổng m3
+  totalPrice: number; // tổng tiền
+  paid: number; // số tiền đã trả
+  paymentStatus: string; // trạng thái thanh toán
+  status: string; // trạng thái đơn
+  createdAt: string; // ngày tạo
+}
+export interface IConsignmentTransaction {
+  id?: string
+  transactionCode?: string // mã vận đơn
+  consignmentCode?: string // mã ký gửi
+  userId?: string // id user
+  productName?: string // tên sản phẩm
+  productValue?: number // giá trị
+  productAmount?: number // số sản phẩm
+  weight?: number // cân nặng
+  weightByVolume?: number // cân nặng theo thể tích
+  width?: number // chiều rộng
+  length?: number // chiều dài
+  height?: number // chiều cao
+  price?: number // đơn giá
+  totalPrice?: number // tổng tiền
+  createdAt?: string // ngày tạo
+  updatedAt?: string // ngày cập nhật
+  status?: string // trạng thái
+}
+
+export interface IMessage {
+  id?: string
+  consignmentId?: string
+  senderId?: string
+  message?: string
+  createdAt?: string
+  senderName?: string
+}
+
+export interface IConfigItem {
+  min: number
+  max: number
+  value: number
+}
+
+export interface IConfig {
+  id?: string
+  exchange_rate: number
+  purchase_fee: Array<IConfigItem>
+  weight: Array<IConfigItem>
 }

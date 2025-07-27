@@ -1,0 +1,39 @@
+.consignment-detail {
+  .title {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+  }
+
+  .ant-breadcrumb-link {
+    font-weight: 600;
+  }
+
+  &-wrapper {
+    margin-top: 20px;
+  }
+
+  .consignment-chat {
+    &-frame {
+      height: 290px;
+      margin-bottom: 15px;
+      overflow-y: auto;
+      padding: 10px;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+    }
+
+    button {
+      align-items: center;
+    }
+
+    .empty-message {
+      color: $color_primary;
+      font-size: 16px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100%;
+    }
+  }
+}

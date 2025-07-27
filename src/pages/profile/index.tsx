@@ -1,10 +1,13 @@
 import { Button, Form, Input, Select } from "antd";
+import showMessage from "components/Message";
 import { useEffect, useState } from "react";
 import { provinceService } from "services/province";
+import { userService } from "services/user";
 import { userStore } from "store/userStore";
 
 const Profile = () => {
   const {
+    id: userId,
     email,
     avatar,
     name,
@@ -13,6 +16,7 @@ const Profile = () => {
     district,
     address_detail,
     storage,
+    setUser,
   } = userStore();
 
   const [address, setAddress] = useState<{
@@ -42,6 +46,23 @@ const Profile = () => {
     getAddress();
   }, []);
 
+  const handleUpdateProfile = async (values: any) => {
+    try {
+      const res: any = await userService.update({ id: userId, ...values });
+      if (res.status == 200) {
+        const data = res.data.data.result
+        setUser({
+          ...data,
+        });
+        showMessage("success", "Cập nhật thông tin thành công.");
+      }
+
+    } catch (error) {
+      console.log(error);
+      showMessage("error", "Cập nhật thông tin thất bại.");
+    }
+  };
+
   return (
     <div className="profile-page">
       <h1 className="title">Thông tin cá nhân</h1>
@@ -56,6 +77,7 @@ const Profile = () => {
           address_detail,
           storage,
         }}
+        onFinish={handleUpdateProfile}
       >
         <Form.Item label="Email" name="email" required>
           <Input readOnly bordered={false} />

@@ -33,15 +33,15 @@ class UserService {
     return axiosInstance.get(`/user/${userId}`);
   }
   update(params: {
-    userId: string;
+    id: string;
     name?: string;
     phone_number?: string;
     storage?: string;
     address_detail?: string;
     balance?: number;
   }) {
-    const { userId, ...data } = params;
-    return axiosInstance.put(`/user/${userId}`, data);
+    const { id, ...data } = params;
+    return axiosInstance.put(`/user/${id}`, data);
   }
   delete(userId: string) {
     return axiosInstance.delete(`/user/${userId}`);
