@@ -1,0 +1,24 @@
+.order-statistics {
+  .ant-btn-primary {
+    padding: 4px 24px;
+  }
+  .export-btn {
+    background-color: #2a8f57;
+    &:hover {
+      background-color: #2a8f57 !important;
+    }
+  }
+  .search-form {
+    display: flex;
+    align-items: start;
+    gap: 16px;
+    .ant-form-item {
+      &.type {
+        max-width: 300px;
+      }
+      &.date-range {
+        max-width: 400px;
+      }
+    }
+  }
+}

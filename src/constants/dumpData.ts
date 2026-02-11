@@ -1,5 +1,14 @@
 import { USER_ROLE } from "constants";
-import { IConsignment, IConsignmentTable, IConsignmentTransaction, IOrder, ITransaction, IUser } from "./interface";
+import {
+  IConsignment,
+  IConsignmentTable,
+  IConsignmentTransaction,
+  IOrder,
+  ITransaction,
+  IUser,
+} from "./interface";
+import dayjs from "dayjs";
+import { OrderStatsItem } from "services/statistics";
 
 export const user: IUser = {
   id: "1",
@@ -124,10 +133,10 @@ export const consignmentData: IConsignmentTable[] = [
   },
 ];
 export const consignment: IConsignment = {
-  id: 'consignment-001',
-  code: 'CGN-20250605-001',
-  userId: 'user-12345',
-  status: 'shop_dispatching',
+  id: "consignment-001",
+  code: "CGN-20250605-001",
+  userId: "user-12345",
+  status: "shop_dispatching",
   isWoodPackage: true,
   isItemInspected: true,
   insurance: 0,
@@ -137,7 +146,7 @@ export const consignment: IConsignment = {
   extraFee: 0,
   discount: 0,
   paid: 739000,
-  paymentStatus: 'Đã thanh toán',
+  paymentStatus: "Đã thanh toán",
   totalWeight: 25.5,
   totalVolume: 0.12,
   feeShipCN: 80000,
@@ -145,21 +154,21 @@ export const consignment: IConsignment = {
   weightPrice: 459000,
   totalPrice: 739000,
   receiverInfo: {
-    name: 'Nguyễn Văn A',
-    phone: '0987654321',
-    address: '123 Đường ABC, Quận 1, TP.HCM'
+    name: "Nguyễn Văn A",
+    phone: "0987654321",
+    address: "123 Đường ABC, Quận 1, TP.HCM",
   },
-  VNStorage: 'Hà Nội',
-  createdAt: '2025-06-05T09:30:00Z',
-}
+  VNStorage: "Hà Nội",
+  createdAt: "2025-06-05T09:30:00Z",
+};
 
 export const consignmentTransactions: IConsignmentTransaction = [
   {
-    id: 'txn-001',
-    transactionCode: 'TXN-20250605-001',
-    consignmentCode: 'CGN-20250605-001',
-    userId: 'user-12345',
-    productName: 'Áo thun nam',
+    id: "txn-001",
+    transactionCode: "TXN-20250605-001",
+    consignmentCode: "CGN-20250605-001",
+    userId: "user-12345",
+    productName: "Áo thun nam",
     productValue: 200000,
     productAmount: 3,
     weight: 1.5,
@@ -169,16 +178,16 @@ export const consignmentTransactions: IConsignmentTransaction = [
     height: 10,
     price: 10000,
     totalPrice: 30000,
-    createdAt: '2025-06-05T09:00:00Z',
-    updatedAt: '2025-06-05T09:10:00Z',
-    status: 'packed'
+    createdAt: "2025-06-05T09:00:00Z",
+    updatedAt: "2025-06-05T09:10:00Z",
+    status: "packed",
   },
   {
-    id: 'txn-002',
-    transactionCode: 'TXN-20250605-002',
-    consignmentCode: 'CGN-20250605-001',
-    userId: 'user-12345',
-    productName: 'Giày thể thao',
+    id: "txn-002",
+    transactionCode: "TXN-20250605-002",
+    consignmentCode: "CGN-20250605-001",
+    userId: "user-12345",
+    productName: "Giày thể thao",
     productValue: 1500000,
     productAmount: 1,
     weight: 2,
@@ -188,8 +197,54 @@ export const consignmentTransactions: IConsignmentTransaction = [
     height: 15,
     price: 20000,
     totalPrice: 20000,
-    createdAt: '2025-06-05T09:15:00Z',
-    updatedAt: '2025-06-05T09:20:00Z',
-    status: 'packed'
+    createdAt: "2025-06-05T09:15:00Z",
+    updatedAt: "2025-06-05T09:20:00Z",
+    status: "packed",
+  },
+];
+
+export function randomInt(min: number, max: number) {
+  return Math.floor(Math.random() * (max - min + 1)) + min;
+}
+
+export function generateFakeOrderStats(
+  type: "day" | "week" | "month",
+  from: string,
+  to: string
+): OrderStatsItem[] {
+  const start = dayjs(from);
+  const end = dayjs(to);
+
+  const result: OrderStatsItem[] = [];
+  let current = start;
+
+  while (current.isBefore(end) || current.isSame(end, type)) {
+    let label = "";
+
+    if (type === "day") {
+      label = current.format("YYYY-MM-DD");
+      current = current.add(1, "day");
+    } else if (type === "week") {
+      label = current.format("YYYY-[W]WW");
+      current = current.add(1, "week");
+    } else {
+      label = current.format("YYYY-MM");
+      current = current.add(1, "month");
+    }
+
+    const itemCost = randomInt(5_000_000, 30_000_000);
+    const weightFee = randomInt(300_000, 2_000_000);
+    const orderFee = Math.floor((itemCost * randomInt(3, 7)) / 100);
+    const extraFee = randomInt(0, 500_000);
+
+    result.push({
+      date_label: label,
+      total_item_cost: itemCost,
+      total_weight_fee: weightFee,
+      total_order_fee: orderFee,
+      total_extra_fee: extraFee,
+    });
   }
-]
+
+  return result;
+}

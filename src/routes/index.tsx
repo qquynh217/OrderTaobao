@@ -15,7 +15,15 @@ import ListOrder from "pages/order/list-order";
 import Profile from "pages/profile";
 import SignUp from "pages/signup";
 import Transaction from "pages/transaction";
-import { FaBoxArchive, FaCartShopping, FaGear, FaGlobe, FaUserGroup, FaWallet } from "react-icons/fa6";
+import { FaChartLine } from "react-icons/fa";
+import {
+  FaBoxArchive,
+  FaCartShopping,
+  FaGear,
+  FaGlobe,
+  FaUserGroup,
+  FaWallet,
+} from "react-icons/fa6";
 import { Navigate, createBrowserRouter } from "react-router-dom";
 
 export const ROUTE_URL = {
@@ -41,6 +49,7 @@ export const ROUTE_URL = {
   USER_ADMIN: "/quan-ly/khach-hang",
   ORDER_ADMIN_DETAIL: "/quan-ly/don-hang/:orderId",
   CONFIG_ADMIN: "/quan-ly/chi-phi",
+  STATISTICS_ADMIN: "/quan-ly/thong-ke",
 };
 const routes = [
   {
@@ -127,6 +136,10 @@ const routes = [
         path: ROUTE_URL.CONFIG_ADMIN,
         element: <Config />,
       },
+      // {
+      //   path: ROUTE_URL.STATISTICS_ADMIN,
+      //   element: <OrderStatistics />,
+      // },
     ],
   },
   {
@@ -197,6 +210,12 @@ export const sidebarItems = [
     key: ROUTE_URL.CONFIG_ADMIN,
     icon: <FaGear />,
     label: "Quản lý chi phí",
+    role: [USER_ROLE["ADMIN"]],
+  },
+  {
+    key: ROUTE_URL.STATISTICS_ADMIN,
+    icon: <FaChartLine />,
+    label: "Thống kê",
     role: [USER_ROLE["ADMIN"]],
   },
 ];
