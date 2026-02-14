@@ -1,7 +1,7 @@
 import { IOrder, IOrderProduct, IPackage, IUser } from "./interface";
 
 export const initUser: IUser = {
-  id: 0,
+  id: "",
   email: "",
   name: "",
   phone_number: "",
