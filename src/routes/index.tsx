@@ -15,7 +15,6 @@ import ListOrder from "pages/order/list-order";
 import Profile from "pages/profile";
 import SignUp from "pages/signup";
 import Transaction from "pages/transaction";
-import { FaChartLine } from "react-icons/fa";
 import {
   FaBoxArchive,
   FaCartShopping,
@@ -212,10 +211,10 @@ export const sidebarItems = [
     label: "Quản lý chi phí",
     role: [USER_ROLE["ADMIN"]],
   },
-  {
-    key: ROUTE_URL.STATISTICS_ADMIN,
-    icon: <FaChartLine />,
-    label: "Thống kê",
-    role: [USER_ROLE["ADMIN"]],
-  },
+  // {
+  //   key: ROUTE_URL.STATISTICS_ADMIN,
+  //   icon: <FaChartLine />,
+  //   label: "Thống kê",
+  //   role: [USER_ROLE["ADMIN"]],
+  // },
 ];

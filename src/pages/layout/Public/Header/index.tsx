@@ -1,3 +1,4 @@
+import { USER_ROLE } from "constants";
 import { FC, useEffect, useState } from "react";
 import { FaShoppingCart } from "react-icons/fa";
 import { NavLink } from "react-router-dom";
@@ -7,7 +8,7 @@ import { userStore } from "store/userStore";
 
 const HeaderPublic: FC = () => {
   const [scrolled, setScrolled] = useState(false);
-  const { token } = userStore();
+  const { token, role } = userStore();
 
   // Hàm theo dõi sự kiện cuộn
   useEffect(() => {
@@ -43,7 +44,7 @@ const HeaderPublic: FC = () => {
         <div className="nav-item">
           <NavLink to={ROUTE_URL.POLICY}>Quy định & Chính sách</NavLink>
         </div>
-        {token ? (
+        {token ? ( role == USER_ROLE.USER ? (
           <>
             <div className="nav-item">
               <NavLink to={ROUTE_URL.ORDER_ALL}>Quản lý đơn hàng</NavLink>
@@ -55,7 +56,11 @@ const HeaderPublic: FC = () => {
                 </div>
               </NavLink>
             </div>
-          </>
+          </>) : (
+            <div className="nav-item">
+              <NavLink to={ROUTE_URL.ORDER_ADMIN}>Quản lý đơn hàng</NavLink>
+            </div>
+          )
         ) : (
           <>
             <div className="nav-item">
