@@ -1,6 +1,7 @@
 import { Avatar, Dropdown } from "antd";
 import NumberFormat from "components/NumberFormat";
-import { FC } from "react";
+import { USER_ROLE } from "constants";
+import { FC, useMemo } from "react";
 import { FaRegPenToSquare } from "react-icons/fa6";
 import { TbLogout } from "react-icons/tb";
 import { NavLink } from "react-router-dom";
@@ -10,8 +11,44 @@ import { configStore } from "store/configStore";
 import { userStore } from "store/userStore";
 
 const HeaderPrivate: FC<{ isCollapsed: boolean }> = ({ isCollapsed }) => {
-  const { name, email, balance, handleLogout } = userStore();
+  const { name, email, balance, handleLogout, role } = userStore();
   const { exchange_rate } = configStore();
+
+  const items = useMemo(() => [
+    {
+      key: "info",
+      label: (
+        <div className="user-menu-item user-info">
+          <Avatar src={emptyAva} alt="" size={44} />
+          <b>{name}</b>
+          <p>{email}</p>
+        </div>
+      ),
+      role: [USER_ROLE.USER, USER_ROLE.ADMIN],
+    },
+    {
+      key: ROUTE_URL.PROFILE,
+      label: (
+        <div className="user-menu-item">
+          <FaRegPenToSquare />
+          <NavLink to={ROUTE_URL.PROFILE}>
+            Sửa thông tin cá nhân
+          </NavLink>
+        </div>
+      ),
+      role: [USER_ROLE.USER],
+    },
+    {
+      key: "logout",
+      label: (
+        <div className="user-menu-item" onClick={handleLogout}>
+          <TbLogout />
+          <p>Đăng xuất</p>
+        </div>
+      ),
+      role: [USER_ROLE.USER, USER_ROLE.ADMIN],
+    },
+  ].filter((item) => item.role.includes(role)),[role])
 
   return (
     <div
@@ -30,38 +67,7 @@ const HeaderPrivate: FC<{ isCollapsed: boolean }> = ({ isCollapsed }) => {
           {/* <Link to={ROUTE_URL.CART}>Giỏ hàng</Link> */}
           <Dropdown
             menu={{
-              items: [
-                {
-                  key: "info",
-                  label: (
-                    <div className="user-menu-item user-info">
-                      <Avatar src={emptyAva} alt="" size={44} />
-                      <b>{name}</b>
-                      <p>{email}</p>
-                    </div>
-                  ),
-                },
-                {
-                  key: ROUTE_URL.PROFILE,
-                  label: (
-                    <div className="user-menu-item">
-                      <FaRegPenToSquare />
-                      <NavLink to={ROUTE_URL.PROFILE}>
-                        Sửa thông tin cá nhân
-                      </NavLink>
-                    </div>
-                  ),
-                },
-                {
-                  key: "logout",
-                  label: (
-                    <div className="user-menu-item" onClick={handleLogout}>
-                      <TbLogout />
-                      <p>Đăng xuất</p>
-                    </div>
-                  ),
-                },
-              ],
+              items: items,
             }}
             placement="bottomLeft"
             arrow={false}
