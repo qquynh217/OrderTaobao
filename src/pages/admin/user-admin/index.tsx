@@ -14,6 +14,7 @@ import {
 import { FilterValue } from "antd/es/table/interface";
 import showMessage from "components/Message";
 import NumberFormat from "components/NumberFormat";
+import RechargeModal from "components/page/user/RechargeModal";
 import UserModal from "components/page/user/UserModal";
 import { PAGE_SIZE_OPTIONS, SORT_DIRECTIONS } from "constants";
 import { IUser } from "constants/interface";
@@ -21,6 +22,7 @@ import dayjs from "dayjs";
 import { get } from "lodash";
 import { FC, useEffect, useState } from "react";
 import { AiFillDelete } from "react-icons/ai";
+import { FaMoneyBill } from "react-icons/fa6";
 import { RiEdit2Fill } from "react-icons/ri";
 import { userService } from "services/user";
 import { formatDate, handleSortOrder } from "utils";
@@ -35,6 +37,7 @@ const UserAdmin: FC = () => {
     sort: SORT_DIRECTIONS.DESC,
   });
   const [isOpenModal, setIsOpenModal] = useState<string>("");
+  const [rechargeUser, setRechargeUser] = useState<IUser | null>(null);
   const [users, setUsers] = useState<{ list: Array<IUser>; total: 0 }>({
     list: [],
     total: 0,
@@ -101,7 +104,7 @@ const UserAdmin: FC = () => {
   };
   const handleUpdate = async (value: IUser) => {
     try {
-      const res = await userService.update({ userId: value.id + "", ...value });
+      const res = await userService.update({ id: value.id + "", ...value });
       if (res.status == 200) {
         showMessage("success", "Sửa thông tin thành công!");
         fetchOrders(queryParams);
@@ -109,6 +112,19 @@ const UserAdmin: FC = () => {
     } catch (error) {
       console.log(error);
       showMessage("error", "Sửa thông tin không thành công!");
+    }
+  };
+  const handleRecharge = async (userId: string, amount: number) => {
+    try {
+      const res = await userService.recharge(userId, amount);
+      if(res.status == 200) {
+        showMessage("success", "Nạp tiền thành công");
+        fetchOrders(queryParams);
+      } else {
+        showMessage("error", "Nạp tiền không thành công");
+      }
+    } catch (error) {
+      showMessage("error", "Nạp tiền không thành công");
     }
   };
   const handleDeleteUser = async (userId: string) => {
@@ -169,12 +185,12 @@ const UserAdmin: FC = () => {
         </b>
       ),
     },
-    {
-      title: "Chức năng",
-      dataIndex: "role",
-      key: "role",
-      width: 100,
-    },
+    // {
+    //   title: "Chức năng",
+    //   dataIndex: "role",
+    //   key: "role",
+    //   width: 100,
+    // },
     {
       title: "Ngày tạo",
       dataIndex: "created_time",
@@ -186,7 +202,7 @@ const UserAdmin: FC = () => {
       title: "Action",
       dataIndex: "id",
       key: "id",
-      render: (val) => (
+      render: (val, rec) => (
         <Space>
           <Button
             onClick={() => {
@@ -194,6 +210,13 @@ const UserAdmin: FC = () => {
             }}
           >
             <RiEdit2Fill />
+          </Button>
+          <Button
+            onClick={() => {
+              setRechargeUser(rec);
+            }}
+          >
+           <FaMoneyBill />
           </Button>
           <Popconfirm
             title="Xóa user"
@@ -254,6 +277,12 @@ const UserAdmin: FC = () => {
         isOpen={isOpenModal}
         setIsOpen={setIsOpenModal}
         handleUpdate={handleUpdate}
+      />
+      <RechargeModal
+        isOpen={rechargeUser != null}
+        setIsOpen={setRechargeUser}
+        user={rechargeUser}
+        handleRecharge={handleRecharge}
       />
     </div>
   );

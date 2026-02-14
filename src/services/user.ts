@@ -46,6 +46,9 @@ class UserService {
   delete(userId: string) {
     return axiosInstance.delete(`/user/${userId}`);
   }
+  recharge(userId: string, amount: number) {
+    return axiosInstance.post(`/user/${userId}/recharge`, { amount });
+  }
 }
 
 export const userService = new UserService();

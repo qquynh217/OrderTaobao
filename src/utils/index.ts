@@ -39,3 +39,8 @@ export const handleSortOrder = (order?: string) => {
   const { ASC, DESC } = SORT_DIRECTIONS;
   return order === "ascend" ? ASC : DESC;
 };
+
+
+export const formatNumber = (number: number) => {
+  return number.toLocaleString("vi-VN");
+};
